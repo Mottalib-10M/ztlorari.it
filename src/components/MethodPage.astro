@@ -1,0 +1,63 @@
+---
+/** Metodo e fonti (pagina di fiducia, RECETTE §8.2) : fonti degli orari, trascrizione, festivi, multa, limiti, test. */
+import PageLayout from '../layouts/PageLayout.astro';
+import { route, type Locale } from '../i18n/routes';
+import { P, sourceUrl } from '../lib/engine/params';
+import type { SourceKey } from '../lib/engine/params';
+import * as M from '../lib/engine/index';
+import { helpers } from '../lib/helpers';
+import { breadcrumbSchema, webPageSchema } from '../lib/seo';
+import { CONTACT_EMAIL } from '../data/site-config';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const H = helpers(lang);
+const { T, eur, date } = H;
+const title = T('Orari delle ZTL: metodo, fonti e limiti dello strumento', 'ZTL hours in Italy: our method, sources and limits');
+const description = T(
+  'Come trascriviamo gli orari delle ZTL dalle pagine dei comuni, come trattiamo festivi, notti e sospensioni, da dove viene la multa e che cosa non sappiamo.',
+  'How we transcribe ZTL hours from city pages, how we handle public holidays, night periods and suspensions, where the fine comes from and what we cannot do.');
+const h1 = T('Metodo e fonti degli orari', 'How the hours are read, and the sources');
+const path = route('method', lang);
+const sources = (Object.keys(P.sources) as SourceKey[]).map((k) => ({ name: P.sources[k].label[lang], url: sourceUrl(k) }));
+const righe = M.CITTA.map((c) => [M.nomeCitta(c, lang), String(c.zone.length), c.fonte.ente, date(c.fonte.data)]);
+const tabella = H.table([T('Città', 'City'), T('Zone', 'Zones'), T('Fonte', 'Source'), T('Data della fonte', 'Source date')], righe);
+const nZone = M.CITTA.reduce((s, c) => s + c.zone.length, 0);
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: h1, description, path, lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: h1, path }])]} breadcrumbs={[{ label: h1 }]} sources={sources}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{h1}</h1>
+    <p class="mt-3 text-lg text-navy-700">{T('Gli orari delle ZTL: da dove viene ogni orario, come lo strumento decide «attiva» o «non attiva», e dove si ferma.', 'Where every timetable comes from, how the tool decides “active” or “not active”, and where it stops.')}</p></header>
+  <div class="prose prose-slate max-w-none">
+    {lang === 'it' && <>
+      <p>Lo strumento risponde a una domanda: a questa data e a quest’ora, questa zona a traffico limitato è attiva? Per farlo usa tre cose: le fasce orarie della zona, trascritte dalla fonte ufficiale della città; il calendario delle festività nazionali; le sospensioni indicate dalla fonte. Ogni orario sta in un solo file di dati (<code>ztl.json</code>), con l’indirizzo della fonte e la sua data; nessun orario è scritto nel codice del programma. Oggi il file contiene {M.CITTA.length} città e {nZone} zone.</p>
+      <Fragment set:html={tabella} />
+      <h2>1. Come trascriviamo gli orari delle ZTL</h2>
+      <p>Ogni fascia è scritta come giorni della settimana, ora di inizio e ora di fine. Se l’ora di fine è uguale o precedente a quella di inizio, la fascia finisce il giorno dopo: «venerdì dalle 23:00 alle 3:00» vale fino alle 3:00 di sabato. Una fascia può valere solo in alcuni mesi (Trastevere e San Lorenzo il mercoledì e il giovedì da maggio a ottobre, Palermo con due calendari estate e inverno) o in un periodo calcolato ogni anno, come la ZTL notturna estiva di Firenze, dal primo giovedì di aprile alla prima domenica di ottobre. Fasce contigue o sovrapposte vengono unite: a Firenze, nel periodo estivo, il venerdì la fascia diurna e quella notturna formano un solo divieto dalle 7:30 alle 3:00.</p>
+      <h2>2. Festivi e sospensioni</h2>
+      <p>Le festività nazionali sono le dieci a data fissa più Pasqua e il Lunedì dell’Angelo, calcolati per ogni anno. Per ogni zona registriamo ciò che dice la fonte: «esclusi i festivi», «anche se festivi», oppure niente. Quando la fonte tace e il giorno è festivo, lo strumento considera la zona attiva e lo scrive. Il santo patrono di ogni città non è calcolato. Le sospensioni hanno le date della fonte: il mese di agosto per la ZTL notturna del Centro Storico e per San Lorenzo a Roma, dal 10 al 23 agosto 2026 per la ZTL Centrale di Torino.</p>
+      <h2>3. Le città escluse</h2>
+      <p>Per la raccolta abbiamo cercato le pagine ufficiali di una trentina di comuni capoluogo. Abbiamo escluso le città la cui pagina pubblica gli orari solo dentro una mappa, un PDF di permessi o un’ordinanza vecchia di anni senza conferma più recente, e quelle in cui la pagina non era raggiungibile. Per Bologna la fonte è la descrizione del dataset degli open data, aggiornata nel 2021; per Firenze la pagina di Servizi alla Strada del 2023: lo diciamo accanto al risultato.</p>
+      <h2>4. La multa</h2>
+      <p>L’accesso non autorizzato in una ZTL è punito dall’<Fragment set:html={H.src('cds7', 'articolo 7, comma 14')} /> con una somma da {eur(P.multa.ztl.min)} a {eur(P.multa.ztl.max)}; nella zona tariffata (Area C) il comma 14-bis aggiunge la tariffa del giorno; i divieti per classe di emissioni (comma 13-bis) costano da {eur(P.multa.emissioni.min)} a {eur(P.multa.emissioni.max)}. L’<Fragment set:html={H.src('cds198', 'articolo 198, comma 2-bis')} /> conta una sola sanzione per giorno di calendario nella stessa zona quando i passaggi sono rilevati da telecamere. Pagamento ridotto del 30% entro 5 giorni e minimo entro 60 (<Fragment set:html={H.src('cds202', 'articolo 202')} />), metà del massimo dopo 60 giorni senza ricorso (<Fragment set:html={H.src('cds203', 'articolo 203')} />). Testi letti su Normattiva il {date(P.retrieved_at)}. Le spese di notifica non sono incluse: le stabilisce ogni ente e sono sul verbale.</p>
+      <h2>Limiti</h2>
+      <p>Lo strumento non conosce le chiusure straordinarie per eventi, cantieri, partite o manifestazioni, né i permessi del singolo veicolo: dice se la zona è attiva, non se tu puoi entrare. Non legge in tempo reale lo stato dei varchi: nessun comune lo pubblica in un formato aperto. L’ora è quella del tuo dispositivo convertita nel fuso di Roma.</p>
+      <h2>Test e aggiornamento</h2>
+      <p>Ogni build controlla decine di casi: i confini delle fasce di ogni città, le fasce che passano la mezzanotte, Pasqua e le festività, le sospensioni di agosto, il periodo estivo di Firenze, gli importi e le scadenze della multa. Una differenza blocca la pubblicazione. Le fonti vengono rilette a mano; un errore si segnala a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    </>}
+    {lang === 'en' && <>
+      <p>The tool answers one question: on this date and at this time, is this limited-traffic zone active? To do so it uses three things: the zone’s restricted periods, transcribed from the city’s official source; the calendar of Italian public holidays; and the suspensions stated by the source. Every timetable sits in a single data file (<code>ztl.json</code>), with the source address and its date; no hours are written into the program code. Today the file holds {M.CITTA.length} cities and {nZone} zones.</p>
+      <Fragment set:html={tabella} />
+      <h2>1. How we transcribe a timetable</h2>
+      <p>Each period is written as weekdays, a start time and an end time. If the end time is equal to or earlier than the start time, the period ends the next day: “Friday from 23:00 to 3:00” lasts until 3:00 on Saturday. A period may apply only in some months (Trastevere and San Lorenzo on Wednesday and Thursday from May to October, Palermo with separate summer and winter calendars) or in a period worked out each year, such as Florence’s summer night ZTL, from the first Thursday of April to the first Sunday of October. Adjacent or overlapping periods are merged: in Florence, in summer, Friday’s day and night periods form a single ban from 7:30 to 3:00.</p>
+      <h2>2. Public holidays and suspensions</h2>
+      <p>Italian public holidays are the ten fixed-date ones plus Easter Sunday and Easter Monday, computed for each year. For every zone we record what the source says: “holidays excluded”, “holidays included”, or nothing. When the source is silent and the day is a holiday, the tool treats the zone as active and says so. Each city’s patron saint day is not computed. Suspensions carry the source’s dates: August for Rome’s Historic Centre night ZTL and San Lorenzo, 10 to 23 August 2026 for Turin’s ZTL Centrale.</p>
+      <h2>3. Cities left out</h2>
+      <p>For the collection we looked for the official pages of about thirty provincial capitals. We left out cities whose page publishes hours only inside a map, a permit PDF or an order several years old with no more recent confirmation, and those whose page could not be reached. For Bologna the source is the description of the open-data set, updated in 2021; for Florence, the Servizi alla Strada page from 2023: we say so next to the result.</p>
+      <h2>4. The fine</h2>
+      <p>Unauthorised entry into a ZTL is punished by <Fragment set:html={H.src('cds7', 'article 7, paragraph 14')} /> with a sum of {eur(P.multa.ztl.min)} to {eur(P.multa.ztl.max)}; in the charging zone (Area C) paragraph 14-bis adds the day’s charge; bans by emission class (paragraph 13-bis) cost {eur(P.multa.emissioni.min)} to {eur(P.multa.emissioni.max)}. <Fragment set:html={H.src('cds198', 'Article 198, paragraph 2-bis')} /> counts one fine per calendar day in the same zone when entries are recorded by cameras. Payment reduced by 30% within 5 days and the minimum within 60 (<Fragment set:html={H.src('cds202', 'article 202')} />), half the maximum after 60 days without an appeal (<Fragment set:html={H.src('cds203', 'article 203')} />). Texts read on Normattiva on {date(P.retrieved_at)}. Notification costs are not included: each authority sets them and they are on the notice.</p>
+      <h2>Limits</h2>
+      <p>The tool does not know about one-off closures for events, roadworks, football matches or demonstrations, nor about an individual vehicle’s permits: it says whether the zone is active, not whether you may enter. It does not read gate status in real time: no city publishes it in an open format. The time is your device’s clock converted to Rome time.</p>
+      <h2>Tests and updates</h2>
+      <p>Every build checks dozens of cases: each city’s period boundaries, periods crossing midnight, Easter and holidays, August suspensions, Florence’s summer period, the fine amounts and deadlines. A mismatch blocks publication. Sources are read again by hand; report an error to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    </>}
+  </div>
+</PageLayout>

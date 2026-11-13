@@ -1,0 +1,22 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'it';
+---
+<PageLayout title={`Contatti – ${SITE_NAMES[lang]}`} description="Scrivi all’editore di ZTL Orari: segnala un orario cambiato, una zona nuova o una sospensione, una domanda sul metodo, oppure chiedi di inserire lo strumento sul tuo sito." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contatti' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contatti</h1>
+    <p>Un solo indirizzo, letto ogni settimana: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Non c’è una linea telefonica e non richiamiamo nessuno: questo sito non vende nulla.</p>
+    <h2>Segnalare un orario sbagliato</h2>
+    <p>Indica la città, la zona e il link della pagina del comune o dell’ordinanza che riporta l’orario corretto. Una foto del cartello al varco aiuta, purché non mostri targhe o persone. Non mandarci mai il verbale o la targa: non ci servono. La procedura è nella <a href={route('editorial', lang)}>politica editoriale</a>.</p>
+    <h2>Cosa non possiamo fare</h2>
+    <p>Non rilasciamo permessi, non comunichiamo targhe ai comuni e non abbiamo accesso agli archivi dei varchi né ai verbali. Un permesso si chiede al comune o alla sua società della mobilità; una multa si paga o si contesta come scritto sul verbale. Non diamo consulenza legale su casi individuali.</p>
+    <h2>Inserire lo strumento</h2>
+    <p>Alberghi, bed and breakfast, associazioni e testate locali: lo strumento «ZTL attiva adesso?» si inserisce gratis con un iframe. Il codice è nella pagina <a href={route('widget', lang)}>Inserisci lo strumento</a>.</p>
+    <h2>Editore</h2>
+    <LegalIdentity lang={lang} />
+    <p>{AUTHOR_NAME} è responsabile dei contenuti di ZTL Orari; i dati completi sono nelle <a href={route('terms', lang)}>note legali</a>.</p>
+  </div>
+</PageLayout>

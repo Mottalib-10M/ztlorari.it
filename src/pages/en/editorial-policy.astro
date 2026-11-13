@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Editorial policy – ${SITE_NAMES[lang]}`} description="Where the ZTL hours and fine amounts published here come from, who is responsible for them, how they are read again and what happens when an error is reported to us." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial and corrections policy</h1>
+    <p>A wrong timetable sends someone into an active ZTL: a fine to pay. Here is where our hours come from and what we do when one is wrong.</p>
+    <h2>Responsibility</h2><p>{AUTHOR_NAME} is responsible for every time, amount and deadline in the tools. A timetable that does not match its source can be reported to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Primary sources only</h2>
+    <ul>
+      <li><strong>official city pages</strong> and those of the companies that run the ZTLs on the city’s behalf (Roma Servizi per la Mobilità, Servizi alla Strada in Florence);</li>
+      <li><strong>city open data</strong>, with its licence (Milan and Bologna, CC BY);</li>
+      <li><strong>the Italian Highway Code</strong> as in force on Normattiva, for the fine and the deadlines.</li>
+    </ul>
+    <p>No timetable comes from blogs, forums, navigation apps or appeal services. A city whose hours cannot be read in an official source is not published.</p>
+    <h2>The date of the source, always</h2><p>Every result shows the body and the date of the page or order the hours come from. When the source does not say what happens on public holidays, we say so and treat the zone as active, because one “active” too many costs nothing and a wrong “open” costs a fine.</p>
+    <h2>Checks before publication</h2><p>Every city’s hours are covered by tests: period boundaries, periods crossing midnight, holidays, summer suspensions, seasonal periods. An update that breaks them is blocked.</p>
+    <h2>Re-reading</h2><p>Sources are read again by hand, not by an automated program; the date of the last reading is printed at the bottom of every page. One-off closures for events, roadworks or demonstrations are not covered: the city announces them and the panel at the gate shows them.</p>
+    <h2>Handling errors</h2>
+    <ol><li>Check against the official source.</li><li>Data corrected and a test added.</li><li>New date on the pages concerned.</li></ol>
+    <h2>Independence</h2><p>No commercial ties with cities, permit agencies, car rental firms, car parks or lawyers. No sponsored links in the text. Any commercial relationship would be clearly disclosed.</p>
+    <p>See also the <a href={route('method', lang)}>method</a>. Version: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

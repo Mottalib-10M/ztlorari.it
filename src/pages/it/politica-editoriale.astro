@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'it';
+---
+<PageLayout title={`Politica editoriale – ${SITE_NAMES[lang]}`} description="Da dove vengono gli orari delle ZTL e gli importi della multa pubblicati qui, chi ne risponde, come vengono riletti e che cosa succede quando si segnala un errore." lang={lang} noindex={true} breadcrumbs={[{ label: 'Politica editoriale' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Politica editoriale e delle correzioni</h1>
+    <p>Un orario sbagliato fa entrare qualcuno in una ZTL accesa: una multa da pagare. Ecco da dove vengono i nostri orari e che cosa facciamo quando uno è sbagliato.</p>
+    <h2>Responsabilità</h2><p>{AUTHOR_NAME} risponde di ogni orario, importo e scadenza degli strumenti. Un orario che non corrisponde alla sua fonte si segnala a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Solo fonti primarie</h2>
+    <ul>
+      <li><strong>le pagine ufficiali dei comuni</strong> e delle società che gestiscono le ZTL per loro conto (Roma Servizi per la Mobilità, Servizi alla Strada a Firenze);</li>
+      <li><strong>gli open data dei comuni</strong>, con la loro licenza (Milano e Bologna, CC BY);</li>
+      <li><strong>il Codice della Strada</strong> nel testo vigente su Normattiva, per la multa e le scadenze.</li>
+    </ul>
+    <p>Nessun orario viene da blog, forum, app di navigazione o siti di ricorsi. Una città il cui orario non è leggibile in una fonte ufficiale non viene pubblicata.</p>
+    <h2>La data della fonte, sempre</h2><p>Ogni risultato riporta l’ente e la data della pagina o dell’atto da cui viene l’orario. Quando la fonte non dice che cosa succede nei festivi, lo scriviamo e trattiamo la zona come attiva, perché un «attiva» di troppo non costa nulla e un «libera» sbagliato costa una multa.</p>
+    <h2>Controlli prima della pubblicazione</h2><p>Gli orari di ogni città sono coperti da test: confini delle fasce, fasce a cavallo della mezzanotte, festività, sospensioni estive, periodi stagionali. Un aggiornamento che li fa fallire viene bloccato.</p>
+    <h2>Riletture</h2><p>Le fonti vengono rilette a mano, non da un programma automatico; la data dell’ultima rilettura è scritta in fondo a ogni pagina. Le chiusure straordinarie per eventi, cantieri o manifestazioni non sono coperte: le annuncia il comune, e il pannello al varco le mostra.</p>
+    <h2>Gestione degli errori</h2>
+    <ol><li>Verifica sulla fonte ufficiale.</li><li>Dati corretti e un test aggiunto.</li><li>Nuova data sulle pagine interessate.</li></ol>
+    <h2>Indipendenza</h2><p>Nessun legame commerciale con comuni, società di permessi, autonoleggi, parcheggi o avvocati. Nessun link sponsorizzato nei testi. Un eventuale rapporto commerciale verrebbe dichiarato chiaramente.</p>
+    <p>Vedi anche il <a href={route('method', lang)}>metodo</a>. Versione: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

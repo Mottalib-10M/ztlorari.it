@@ -1,0 +1,1144 @@
+{
+ "letto": "2026-11-13",
+ "citta": [
+  {
+   "id": "roma",
+   "nome": "Roma",
+   "nomeEn": "Rome",
+   "regione": "Lazio",
+   "fonte": {
+    "ente": "Roma Servizi per la Mobilità (Roma Capitale)",
+    "url": "https://romamobilita.it/muoversi-a-roma/ztl-in-centro/",
+    "data": "2026-07-28",
+    "tipo": "pagina",
+    "nota": "pagina «ZTL in Centro», aggiornata il 28/07/2026"
+   },
+   "fontiExtra": [
+    {
+     "ente": "Roma Servizi per la Mobilità (Roma Capitale)",
+     "url": "https://romamobilita.it/muoversi-a-roma/ztl-fascia-verde/",
+     "data": "2026-11-02",
+     "tipo": "pagina",
+     "nota": "pagina «ZTL Fascia Verde», aggiornata il 02/11/2026; Delibera 371/2022 e Ordinanza 144/2026"
+    }
+   ],
+   "zone": [
+    {
+     "id": "centro-diurna",
+     "nome": {
+      "it": "ZTL Centro Storico diurna",
+      "en": "Historic Centre ZTL (day)"
+     },
+     "tipo": "oraria",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "da": "06:30",
+       "a": "18:00"
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "14:00",
+       "a": "18:00"
+      }
+     ],
+     "note": {
+      "it": "Moto e ciclomotori entrano liberamente.",
+      "en": "Motorbikes and mopeds may enter freely."
+     }
+    },
+    {
+     "id": "centro-notturna",
+     "nome": {
+      "it": "ZTL Centro Storico notturna",
+      "en": "Historic Centre ZTL (night)"
+     },
+     "tipo": "oraria",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        5,
+        6
+       ],
+       "da": "23:00",
+       "a": "03:00"
+      }
+     ],
+     "sospensioni": [
+      {
+       "mesi": [
+        8
+       ],
+       "nota": {
+        "it": "In agosto la ZTL notturna non è attiva.",
+        "en": "The night ZTL is not active in August."
+       }
+      }
+     ]
+    },
+    {
+     "id": "tridente",
+     "nome": {
+      "it": "ZTL Tridente (A1)",
+      "en": "Tridente ZTL (A1)"
+     },
+     "tipo": "oraria",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "da": "06:30",
+       "a": "19:00"
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "10:00",
+       "a": "19:00"
+      }
+     ],
+     "note": {
+      "it": "Vietata anche a moto e ciclomotori non autorizzati.",
+      "en": "Also closed to motorbikes and mopeds without a permit."
+     }
+    },
+    {
+     "id": "trastevere-diurna",
+     "nome": {
+      "it": "ZTL Trastevere diurna",
+      "en": "Trastevere ZTL (day)"
+     },
+     "tipo": "oraria",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "06:30",
+       "a": "10:00"
+      }
+     ]
+    },
+    {
+     "id": "trastevere-notturna",
+     "nome": {
+      "it": "ZTL Trastevere notturna",
+      "en": "Trastevere ZTL (night)"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        5,
+        6
+       ],
+       "da": "21:30",
+       "a": "03:00"
+      },
+      {
+       "giorni": [
+        3,
+        4
+       ],
+       "da": "21:30",
+       "a": "03:00",
+       "mesi": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+       ]
+      }
+     ],
+     "note": {
+      "it": "Limite di 30 km/h quando è attiva.",
+      "en": "30 km/h speed limit while active."
+     }
+    },
+    {
+     "id": "san-lorenzo",
+     "nome": {
+      "it": "ZTL San Lorenzo notturna",
+      "en": "San Lorenzo ZTL (night)"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        5,
+        6
+       ],
+       "da": "21:30",
+       "a": "03:00"
+      },
+      {
+       "giorni": [
+        3,
+        4
+       ],
+       "da": "21:30",
+       "a": "03:00",
+       "mesi": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+       ]
+      }
+     ],
+     "sospensioni": [
+      {
+       "mesi": [
+        8
+       ],
+       "nota": {
+        "it": "In agosto la ZTL non è attiva.",
+        "en": "The ZTL is not active in August."
+       }
+      }
+     ]
+    },
+    {
+     "id": "testaccio",
+     "nome": {
+      "it": "ZTL Testaccio notturna",
+      "en": "Testaccio ZTL (night)"
+     },
+     "tipo": "oraria",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        5,
+        6
+       ],
+       "da": "23:00",
+       "a": "03:00"
+      }
+     ]
+    },
+    {
+     "id": "fascia-verde",
+     "nome": {
+      "it": "ZTL Fascia Verde (veicoli più inquinanti)",
+      "en": "Fascia Verde (most polluting vehicles)"
+     },
+     "tipo": "ambientale",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "00:00",
+       "a": "24:00"
+      }
+     ],
+     "chiAccede": {
+      "it": "Vale solo per le categorie vietate: auto a benzina, GPL e metano fino a Euro 2, diesel fino a Euro 3, ciclomotori e moto benzina e diesel Euro 1 e precedenti. Gli altri veicoli circolano liberamente.",
+      "en": "Applies only to the banned categories: petrol, LPG and CNG cars up to Euro 2, diesel cars up to Euro 3, petrol and diesel mopeds and motorbikes Euro 1 and older. Other vehicles drive freely."
+     }
+    }
+   ]
+  },
+  {
+   "id": "milano",
+   "nome": "Milano",
+   "nomeEn": "Milan",
+   "regione": "Lombardia",
+   "fonte": {
+    "ente": "Comune di Milano",
+    "url": "https://www.comune.milano.it/argomenti/mobilita/area-c",
+    "data": "2026-10-15",
+    "tipo": "pagina",
+    "nota": "pagine «Area C» e «Area B», aggiornate il 15/10/2026"
+   },
+   "fontiExtra": [
+    {
+     "ente": "Comune di Milano",
+     "url": "https://www.comune.milano.it/argomenti/mobilita/area-b",
+     "data": "2026-10-15",
+     "tipo": "pagina"
+    },
+    {
+     "ente": "Comune di Milano, open data",
+     "url": "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+     "data": "2026-05-08",
+     "tipo": "opendata",
+     "dataset": "Aree pedonali e ZTL (ds51)",
+     "licenza": "CC BY",
+     "licenzaUrl": "https://creativecommons.org/licenses/by/4.0/",
+     "nota": "orari delle ZTL minori nel campo «note» del dataset"
+    },
+    {
+     "ente": "Comune di Milano",
+     "url": "https://www.comune.milano.it/servizi/mobilita/area-c-acquista-il-ticket",
+     "data": "2026-06-16",
+     "tipo": "pagina",
+     "nota": "ticket di Area C in vigore dal 30 ottobre 2023"
+    }
+   ],
+   "zone": [
+    {
+     "id": "area-c",
+     "nome": {
+      "it": "Area C (Cerchia dei Bastioni)",
+      "en": "Area C (Cerchia dei Bastioni)"
+     },
+     "tipo": "pagamento",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "da": "07:30",
+       "a": "19:30"
+      }
+     ],
+     "tariffa": {
+      "it": "Ticket giornaliero 7,50 €; 3,00 € per i residenti in Area C dal 51° accesso dell’anno; 4,50 € per i veicoli di servizio registrati e per chi sosta in un’autorimessa convenzionata; 22,50 € se pagato dal giorno dopo l’accesso ed entro il settimo giorno.",
+      "en": "Daily ticket €7.50; €3.00 for Area C residents from the 51st entry of the year; €4.50 for registered service vehicles and for drivers parked in an affiliated garage; €22.50 if paid from the day after entry up to the seventh day."
+     }
+    },
+    {
+     "id": "area-b",
+     "nome": {
+      "it": "Area B (varchi blu)",
+      "en": "Area B (blue gates)"
+     },
+     "tipo": "ambientale",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "da": "07:30",
+       "a": "19:30"
+      }
+     ],
+     "chiAccede": {
+      "it": "Divieto solo per i veicoli più inquinanti indicati dal Comune (varchi blu); gli altri entrano liberamente.",
+      "en": "Ban only for the most polluting vehicles listed by the city (blue gates); others enter freely."
+     }
+    },
+    {
+     "id": "navigli-notturna",
+     "nome": {
+      "it": "ZTL Navigli notturna",
+      "en": "Navigli night ZTL"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "20:00",
+       "a": "07:00"
+      }
+     ],
+     "note": {
+      "it": "Ordinanza 648/2015 (vie Borsi, Argelati, Fusetti, Magolfa, Paoli, Pichi, Gola).",
+      "en": "Order 648/2015 (Via Borsi, Argelati, Fusetti, Magolfa, Paoli, Pichi, Gola)."
+     }
+    },
+    {
+     "id": "navigli-fumagalli",
+     "nome": {
+      "it": "ZTL Navigli (via Fumagalli)",
+      "en": "Navigli ZTL (Via Fumagalli)"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "00:00",
+       "a": "24:00"
+      }
+     ],
+     "note": {
+      "it": "Ordinanza 648/2015.",
+      "en": "Order 648/2015."
+     }
+    },
+    {
+     "id": "arco-della-pace",
+     "nome": {
+      "it": "ZTL Arco della Pace",
+      "en": "Arco della Pace ZTL"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "22:00",
+       "a": "06:00"
+      }
+     ],
+     "note": {
+      "it": "Ordinanza 64502/2010.",
+      "en": "Order 64502/2010."
+     }
+    },
+    {
+     "id": "lagrange",
+     "nome": {
+      "it": "ZTL via Lagrange e corso Manusardi",
+      "en": "Via Lagrange and Corso Manusardi ZTL"
+     },
+     "tipo": "oraria",
+     "festivi": "nonIndicato",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "da": "20:00",
+       "a": "02:00"
+      },
+      {
+       "giorni": [
+        5,
+        6,
+        0
+       ],
+       "da": "19:00",
+       "a": "03:00"
+      }
+     ],
+     "note": {
+      "it": "Ordinanza 654/2017.",
+      "en": "Order 654/2017."
+     }
+    },
+    {
+     "id": "ascanio-sforza",
+     "nome": {
+      "it": "ZTL Ascanio Sforza",
+      "en": "Ascanio Sforza ZTL"
+     },
+     "tipo": "oraria",
+     "festivi": "nonIndicato",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "da": "19:00",
+       "a": "06:00"
+      },
+      {
+       "giorni": [
+        5
+       ],
+       "da": "19:00",
+       "a": "24:00"
+      },
+      {
+       "giorni": [
+        6,
+        0
+       ],
+       "da": "00:00",
+       "a": "24:00"
+      },
+      {
+       "giorni": [
+        1
+       ],
+       "da": "00:00",
+       "a": "06:00"
+      }
+     ],
+     "note": {
+      "it": "Ordinanza 1619/2021: dal venerdì alle 19:00 al lunedì alle 6:00 senza interruzione.",
+      "en": "Order 1619/2021: from Friday 19:00 to Monday 06:00 without a break."
+     }
+    }
+   ]
+  },
+  {
+   "id": "firenze",
+   "nome": "Firenze",
+   "nomeEn": "Florence",
+   "regione": "Toscana",
+   "fonte": {
+    "ente": "Servizi alla Strada S.p.A. (per il Comune di Firenze)",
+    "url": "https://www.serviziallastrada.it/servizi-al-cittadino/autorizzazioni-circolazione-ztl-e-sosta-zcs-dei-veicoli/ztl",
+    "data": "2023-10-30",
+    "tipo": "pagina",
+    "nota": "disciplinare n. 2011/M/04192 e s.m.i.; pagina aggiornata il 30/10/2023; i dettagli della notturna estiva sono fissati ogni anno da un’ordinanza"
+   },
+   "zone": [
+    {
+     "id": "settori-abo",
+     "nome": {
+      "it": "ZTL settori A, B e O",
+      "en": "ZTL sectors A, B and O"
+     },
+     "tipo": "oraria",
+     "festivi": "nonIndicato",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "da": "07:30",
+       "a": "20:00"
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "07:30",
+       "a": "16:00"
+      },
+      {
+       "giorni": [
+        4
+       ],
+       "da": "23:00",
+       "a": "03:00",
+       "periodo": {
+        "da": {
+         "mese": 4,
+         "giorno": 4,
+         "n": 1
+        },
+        "a": {
+         "mese": 10,
+         "giorno": 0,
+         "n": 1
+        }
+       }
+      },
+      {
+       "giorni": [
+        5
+       ],
+       "da": "20:00",
+       "a": "03:00",
+       "periodo": {
+        "da": {
+         "mese": 4,
+         "giorno": 4,
+         "n": 1
+        },
+        "a": {
+         "mese": 10,
+         "giorno": 0,
+         "n": 1
+        }
+       }
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "16:00",
+       "a": "03:00",
+       "periodo": {
+        "da": {
+         "mese": 4,
+         "giorno": 4,
+         "n": 1
+        },
+        "a": {
+         "mese": 10,
+         "giorno": 0,
+         "n": 1
+        }
+       }
+      }
+     ]
+    },
+    {
+     "id": "settori-fg",
+     "nome": {
+      "it": "ZTL settori F e G",
+      "en": "ZTL sectors F and G"
+     },
+     "tipo": "oraria",
+     "festivi": "nonIndicato",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "da": "07:30",
+       "a": "20:00"
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "07:30",
+       "a": "16:00"
+      },
+      {
+       "giorni": [
+        4,
+        5,
+        6
+       ],
+       "da": "23:00",
+       "a": "03:00",
+       "periodo": {
+        "da": {
+         "mese": 4,
+         "giorno": 4,
+         "n": 1
+        },
+        "a": {
+         "mese": 10,
+         "giorno": 0,
+         "n": 1
+        }
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bologna",
+   "nome": "Bologna",
+   "regione": "Emilia-Romagna",
+   "fonte": {
+    "ente": "Comune di Bologna, open data",
+    "url": "https://opendata.comune.bologna.it/explore/dataset/zona-a-traffico-limitato/",
+    "data": "2021-08-26",
+    "tipo": "opendata",
+    "dataset": "Zona a traffico limitato (ZTL)",
+    "licenza": "CC BY 4.0",
+    "licenzaUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "nota": "descrizione del dataset (14 perimetri, ordinanza 4000/343434), metadati modificati il 26/08/2021"
+   },
+   "zone": [
+    {
+     "id": "ztl",
+     "nome": {
+      "it": "ZTL centro storico (Sirio)",
+      "en": "Historic centre ZTL (Sirio cameras)"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "07:00",
+       "a": "20:00"
+      }
+     ]
+    },
+    {
+     "id": "zona-t",
+     "nome": {
+      "it": "Zona T e zone pedonali",
+      "en": "T zone and pedestrian zones"
+     },
+     "tipo": "pedonale",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "00:00",
+       "a": "24:00"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "torino",
+   "nome": "Torino",
+   "nomeEn": "Turin",
+   "regione": "Piemonte",
+   "fonte": {
+    "ente": "Città di Torino",
+    "url": "https://www.comune.torino.it/schede-informative/ztl-centrale",
+    "data": "2026-11-12",
+    "tipo": "pagina",
+    "nota": "scheda «ZTL Centrale», ultima modifica 12/11/2026"
+   },
+   "fontiExtra": [
+    {
+     "ente": "Città di Torino",
+     "url": "https://www.comune.torino.it/novita/comunicati/sospensione-estiva-della-ztl-della-sosta-pagamento-0",
+     "data": "2026-06-04",
+     "tipo": "comunicato",
+     "nota": "comunicato n. 223: ZTL sospesa dal 10 al 23 agosto 2026"
+    },
+    {
+     "ente": "Città di Torino",
+     "url": "https://www.comune.torino.it/novita/comunicati/ztl-valentino-citta-amplia-larea-traffico-limitato-per-valorizzare-parco",
+     "data": "2026-03-24",
+     "tipo": "comunicato",
+     "nota": "ZTL Valentino 24 ore su 24; varchi subordinati all’autorizzazione del Ministero"
+    }
+   ],
+   "varchi": 41,
+   "varchiNota": {
+    "it": "27 punti di controllo agli accessi della ZTL Centrale, 11 all’interno e 3 per le aree Statuto, Valperga e Valentino.",
+    "en": "27 camera points at the entrances of the ZTL Centrale, 11 inside it and 3 for the Statuto, Valperga and Valentino areas."
+   },
+   "zone": [
+    {
+     "id": "centrale",
+     "nome": {
+      "it": "ZTL Centrale",
+      "en": "ZTL Centrale"
+     },
+     "tipo": "oraria",
+     "festivi": "sospesa",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "da": "07:30",
+       "a": "10:30"
+      }
+     ],
+     "sospensioni": [
+      {
+       "da": "2026-08-10",
+       "a": "2026-08-23",
+       "nota": {
+        "it": "Sospesa dal 10 al 23 agosto 2026 (comunicato del 4 giugno 2026).",
+        "en": "Suspended from 10 to 23 August 2026 (city notice of 4 June 2026)."
+       }
+      }
+     ]
+    },
+    {
+     "id": "area-romana",
+     "nome": {
+      "it": "ZTL Area Romana",
+      "en": "Area Romana ZTL"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "21:00",
+       "a": "07:30"
+      }
+     ],
+     "note": {
+      "it": "Dentro la ZTL Centrale; in piazza Emanuele Filiberto dalle 19:30. Esclusa dalla sospensione estiva.",
+      "en": "Inside the ZTL Centrale; in Piazza Emanuele Filiberto from 19:30. Not included in the summer suspension."
+     }
+    },
+    {
+     "id": "corsie-tp",
+     "nome": {
+      "it": "Strade e corsie riservate al trasporto pubblico",
+      "en": "Public-transport streets and lanes"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "07:00",
+       "a": "20:00"
+      }
+     ],
+     "note": {
+      "it": "Esclusa dalla sospensione estiva.",
+      "en": "Not included in the summer suspension."
+     }
+    },
+    {
+     "id": "pedonale",
+     "nome": {
+      "it": "ZTL Pedonale",
+      "en": "Pedestrian ZTL"
+     },
+     "tipo": "pedonale",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "00:00",
+       "a": "24:00"
+      }
+     ],
+     "note": {
+      "it": "Esclusa dalla sospensione estiva.",
+      "en": "Not included in the summer suspension."
+     }
+    },
+    {
+     "id": "valentino",
+     "nome": {
+      "it": "ZTL Valentino",
+      "en": "Valentino ZTL"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "00:00",
+       "a": "24:00"
+      }
+     ],
+     "note": {
+      "it": "Esclusa dalla sospensione estiva. I nuovi varchi partono dopo l’autorizzazione del Ministero e un periodo di pre-esercizio.",
+      "en": "Not included in the summer suspension. The new camera gates start after ministry approval and a trial period."
+     }
+    }
+   ]
+  },
+  {
+   "id": "palermo",
+   "nome": "Palermo",
+   "regione": "Sicilia",
+   "fonte": {
+    "ente": "Comune di Palermo, portale ZTL",
+    "url": "https://ztl.comune.palermo.it/ztl/jsp/home.do?sportello=ztl",
+    "data": "2026-11-13",
+    "tipo": "pagina",
+    "nota": "avviso «ORARI ZTL» del portale; la pagina non riporta una data, è stata letta il 13/11/2026"
+   },
+   "zone": [
+    {
+     "id": "ztl",
+     "nome": {
+      "it": "ZTL centro storico",
+      "en": "Historic centre ZTL"
+     },
+     "tipo": "oraria",
+     "festivi": "nonIndicato",
+     "fasce": [
+      {
+       "giorni": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "da": "08:00",
+       "a": "20:00"
+      },
+      {
+       "giorni": [
+        5
+       ],
+       "da": "08:00",
+       "a": "24:00",
+       "mesi": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+       ]
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "00:00",
+       "a": "06:00",
+       "mesi": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+       ]
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "20:00",
+       "a": "24:00",
+       "mesi": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+       ]
+      },
+      {
+       "giorni": [
+        0
+       ],
+       "da": "00:00",
+       "a": "06:00",
+       "mesi": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+       ]
+      },
+      {
+       "giorni": [
+        5
+       ],
+       "da": "08:00",
+       "a": "20:00",
+       "mesi": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "giorni": [
+        5
+       ],
+       "da": "23:00",
+       "a": "24:00",
+       "mesi": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "00:00",
+       "a": "06:00",
+       "mesi": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "giorni": [
+        6
+       ],
+       "da": "23:00",
+       "a": "24:00",
+       "mesi": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "giorni": [
+        0
+       ],
+       "da": "00:00",
+       "a": "06:00",
+       "mesi": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pavia",
+   "nome": "Pavia",
+   "regione": "Lombardia",
+   "fonte": {
+    "ente": "Comune di Pavia",
+    "url": "https://www.comune.pavia.it/schede-informative/ztl-pavia",
+    "data": "2026-09-22",
+    "tipo": "pagina",
+    "nota": "scheda «La Z.T.L. a Pavia», ultima modifica 22/09/2026"
+   },
+   "zone": [
+    {
+     "id": "ztl",
+     "nome": {
+      "it": "ZTL (zone blu, azzurra e verde)",
+      "en": "ZTL (blue, light-blue and green zones)"
+     },
+     "tipo": "oraria",
+     "festivi": "attiva",
+     "fasce": [
+      {
+       "giorni": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+       ],
+       "da": "00:00",
+       "a": "24:00"
+      }
+     ],
+     "note": {
+      "it": "Zona blu pedonale; nella zona azzurra circolano solo gli autorizzati senza sosta; nella zona verde gli autorizzati circolano e sostano.",
+      "en": "Blue zone is pedestrian; in the light-blue zone only permit holders may drive, without parking; in the green zone permit holders may drive and park."
+     }
+    }
+   ]
+  }
+ ]
+}

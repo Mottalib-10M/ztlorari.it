@@ -1,0 +1,31 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CLARITY_ID, CONTACT_EMAIL, GA4_ID, LAST_UPDATED, LEGAL, SITE_NAMES, SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'it';
+---
+<PageLayout title={`Note legali – ${SITE_NAMES[lang]}`} description="Editore, direttore della pubblicazione, hosting, scopo del sito, open data di Milano e Bologna riutilizzati con licenza CC BY, limiti di responsabilità e legge applicabile." lang={lang} noindex={true} breadcrumbs={[{ label: 'Note legali' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Note legali</h1>
+    <p>Informazioni pubblicate ai sensi dell’articolo 6 III-1 della legge francese n. 2004-575 del 21 giugno 2004 sulla fiducia nell’economia digitale (LCEN), essendo l’editore stabilito in Francia, e dell’articolo 7 del decreto legislativo 9 aprile 2003 n. 70.</p>
+    <h2>Editore</h2>
+    <LegalIdentity lang={lang} />
+    <p>Direttore della pubblicazione: {AUTHOR_NAME}, responsabile dei contenuti pubblicati su {SITE_URL}.</p>
+    <h2>Hosting</h2>
+    <LegalIdentity mode="hosting" lang={lang} />
+    <h2>Scopo del sito, nessuna autorizzazione</h2>
+    <p>Il sito indica gratuitamente se una zona a traffico limitato è attiva a una data e a un’ora, partendo dagli orari pubblicati dai comuni, e calcola la sanzione e le scadenze previste dal Codice della Strada per un accesso non autorizzato. Questi risultati non sono un permesso, una deroga, una consulenza legale né una decisione: fanno fede l’ordinanza del comune in vigore, la segnaletica e il pannello al varco, e il verbale ricevuto. Il sito è indipendente: non è collegato a nessun comune, polizia locale, società della mobilità o ministero, e non usa loghi ufficiali. Metodo e limiti: <a href={route('method', lang)}>metodo</a>.</p>
+    <h2>Dati riutilizzati</h2>
+    <p>Comune di Milano, dataset «Aree pedonali e ZTL» (ds51), licenza Creative Commons Attribuzione (CC BY), e Comune di Bologna, dataset «Zona a traffico limitato (ZTL)», licenza <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener" target="_blank">CC BY 4.0</a>: dati adattati, con trascrizioni e calcoli di Radif Partners. Gli orari delle altre città sono trascritti dalle pagine ufficiali indicate in ogni pagina, con la loro data. Codice della Strada: testo vigente su Normattiva; i testi degli atti ufficiali sono esclusi dalla protezione del diritto d’autore (articolo 5 della legge 22 aprile 1941 n. 633).</p>
+    <h2>Limiti di responsabilità</h2>
+    <p>Gli orari sono trascritti a mano e controllati con test automatici, senza garanzia che siano privi di errori, completi o aggiornati al giorno: un comune può cambiare un orario o chiudere una zona per un evento senza preavviso. L’editore non risponde di una multa presa sulla base di uno stato indicato qui. Gli errori si segnalano dalla pagina <a href={route('contact', lang)}>contatti</a>.</p>
+    <h2>Proprietà intellettuale</h2>
+    <p>Testi, grafica e codice sono protetti e restano di proprietà dell’editore; brevi citazioni sono ammesse con un link alla pagina originale. I dati pubblici riutilizzati conservano le loro licenze, indicate sopra.</p>
+    <h2>Inserire lo strumento</h2><p>Lo strumento «ZTL attiva adesso?» si può inserire gratis con un iframe, lasciando visibile il link: vedi la <a href={route('widget', lang)}>pagina del widget</a>.</p>
+    <h2>Dati personali e cookie</h2>
+    {GA4_ID ? (<p>Ciò che scegli negli strumenti resta nel tuo browser. Il sito deposita i cookie di misurazione del pubblico di Google Analytics (<code>_ga</code>, <code>_ga_{GA4_ID.replace('G-', '')}</code>, 13 mesi al massimo), senza pubblicità{CLARITY_ID && '; la stabilità delle pagine è controllata con Microsoft Clarity, senza cookie'}. Dettagli, base giuridica e opposizione: <a href={route('privacy', lang)}>informativa privacy</a> e pagina <a href={route('cookies', lang)}>cookie</a>.</p>) : (<p>Ciò che scegli negli strumenti resta nel tuo browser e il sito non deposita cookie{CLARITY_ID && '; la stabilità delle pagine è controllata in forma anonima con Microsoft Clarity, senza cookie'}. Vedi l’<a href={route('privacy', lang)}>informativa privacy</a> e la pagina <a href={route('cookies', lang)}>cookie</a>.</p>)}
+    <h2>Segnalazioni</h2><p>Contenuti illeciti: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, con l’indirizzo della pagina e il motivo.</p>
+    <h2>Legge applicabile</h2><p>Legge francese, essendo l’editore stabilito in Francia, fatti salvi i diritti inderogabili del consumatore del paese di residenza. In mancanza di accordo, sono competenti i tribunali di {LEGAL.jurisdiction}. Aggiornamento: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

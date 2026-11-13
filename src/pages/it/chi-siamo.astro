@@ -1,0 +1,26 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { P, DATI } from '../../lib/engine/params';
+const lang = 'it';
+const nZone = DATI.citta.reduce((s, c) => s + c.zone.length, 0);
+---
+<PageLayout title="ZTL Orari, chi siamo: chi trascrive gli orari delle ZTL" description="Chi pubblica ZTL Orari, perché uno strumento neutrale sugli orari ZTL, da dove vengono orari e importi delle multe, che cosa non siamo, come segnalare errori." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Chi siamo', path: route('about', lang) }])]} breadcrumbs={[{ label: 'Chi siamo' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Chi pubblica ZTL Orari</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>ZTL Orari è pubblicato da Radif Partners. Risponde a una domanda che ci si fa davanti a un varco o prima di partire: la ZTL è attiva adesso, e se lo è, fino a quando?</p>
+    <h2>Perché questo sito</h2>
+    <p>Gli orari delle ZTL sono sparsi in decine di pagine comunali, ordinanze in PDF e mappe interattive, spesso senza data. I siti che li riprendono copiano tabelle vecchie di anni, dimenticano le sospensioni di agosto o le zone notturne, e nessuno dice da quale atto viene un orario. Qui ogni zona porta la sua fonte e la data della pagina letta: {DATI.citta.length} città e {nZone} zone, verificate una per una. Le città di cui non abbiamo trovato un orario ufficiale leggibile non ci sono.</p>
+    <h2>Da dove vengono i numeri</h2>
+    <p>Gli orari vengono dalle pagine ufficiali dei comuni e delle loro società della mobilità e dagli open data di Milano e Bologna (licenza CC BY). La multa viene dagli articoli 7, 198, 201, 202 e 203 del Codice della Strada, riletti su Normattiva il {displayDate(P.retrieved_at, 'it-IT')}. Tutto è spiegato nel <a href={route('method', lang)}>metodo</a>.</p>
+    <h2>Cosa non siamo</h2>
+    <p>Radif Partners non è un comune, una polizia locale, una società della mobilità né un ente pubblico, e non rilascia permessi. Non vendiamo nulla, non prendiamo commissioni e non chiediamo dati di contatto. Fanno fede l’ordinanza in vigore e la segnaletica al varco.</p>
+    <h2>Finanziamento e dati</h2><p>Il sito è gratuito e senza registrazione. Gli strumenti lavorano nel tuo browser: città, ore e date che scegli non vengono inviate da nessuna parte. Se un giorno ci sarà pubblicità, non starà mai sopra uno strumento.</p>
+    <h2>Perché anche in inglese</h2><p>Ogni pagina esiste in italiano e in inglese, per chi arriva in Italia con un’auto a noleggio o con la propria targa straniera: è chi riceve più spesso una multa ZTL senza sapere di essere entrato in una zona.</p>
+    <h2>Scrivici</h2><p>Un orario cambiato, una zona nuova, una sospensione estiva: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Vedi anche la <a href={route('editorial', lang)}>politica editoriale</a> e le <a href={route('terms', lang)}>note legali</a>.</p>
+  </div>
+</PageLayout>

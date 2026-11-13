@@ -1,0 +1,26 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { P, DATI } from '../../lib/engine/params';
+const lang = 'en';
+const nZone = DATI.citta.reduce((s, c) => s + c.zone.length, 0);
+---
+<PageLayout title="ZTL Orari, about us: who transcribes Italy’s ZTL hours" description="Who publishes ZTL Orari, why a neutral tool for Italian ZTL hours, where the hours and fine amounts come from, what we are not and how to report an error." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'About', path: route('about', lang) }])]} breadcrumbs={[{ label: 'About' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Who publishes ZTL Orari</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>ZTL Orari is published by Radif Partners. It answers the question drivers ask in front of a camera gate or before setting off: is the ZTL active now, and if so, until when?</p>
+    <h2>Why this site</h2>
+    <p>ZTL hours are scattered across dozens of city pages, PDF orders and interactive maps, often undated. Sites that repeat them copy tables that are years old, forget August suspensions or night zones, and none says which order a timetable comes from. Here every zone carries its source and the date of the page read: {DATI.citta.length} cities and {nZone} zones, checked one by one. Cities for which we found no readable official timetable are not included.</p>
+    <h2>Where the figures come from</h2>
+    <p>Hours come from the official pages of the cities and their mobility companies and from Milan and Bologna open data (CC BY licence). The fine comes from articles 7, 198, 201, 202 and 203 of the Italian Highway Code, read again on Normattiva on {displayDate(P.retrieved_at, 'en-GB')}. Everything is explained in the <a href={route('method', lang)}>method</a>.</p>
+    <h2>What we are not</h2>
+    <p>Radif Partners is not a comune, a municipal police force, a mobility company or a public body, and issues no permits. We sell nothing, take no commission and ask for no contact details. The order in force and the signs at the gate are what count.</p>
+    <h2>Funding and data</h2><p>The site is free and needs no sign-up. The tools work in your browser: the cities, times and dates you choose are sent nowhere. If advertising ever appears here, it will never sit above a tool.</p>
+    <h2>Why English too</h2><p>Every page exists in Italian and English, for people arriving in Italy with a rental car or their own foreign plates: they are the drivers who most often get a ZTL fine without knowing they entered a zone.</p>
+    <h2>Write to us</h2><p>A changed timetable, a new zone, a summer suspension: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See also the <a href={route('editorial', lang)}>editorial policy</a> and the <a href={route('terms', lang)}>legal notice</a>.</p>
+  </div>
+</PageLayout>

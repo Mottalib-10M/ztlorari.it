@@ -1,0 +1,14 @@
+---
+/** Strumento di una pagina secondo `page.tool` (components/outils/Tools.tsx). */
+import { StatoCalc, PanoramaTool, MultaCalc, FestiviTool } from './outils/Tools';
+import type { Tool as ToolName } from '../lib/guide-types';
+import type { Locale } from '../i18n/routes';
+import type { Violazione } from '../lib/engine';
+interface Props { tool: ToolName; lang: Locale; id: string; refDay: string; methodHref?: string; citta?: string; zona?: string; preset?: Record<string, string> }
+const { tool, lang, id, refDay, methodHref, citta, zona, preset = {} } = Astro.props;
+---
+{tool === 'stato' && <StatoCalc client:load lang={lang} id={id} refDay={refDay} methodHref={methodHref} citta={citta ?? 'roma'} zona={zona} />}
+{tool === 'panorama' && <PanoramaTool client:load lang={lang} id={id} refDay={refDay} methodHref={methodHref} />}
+{tool === 'notturne' && <PanoramaTool client:load lang={lang} id={id} refDay={refDay} methodHref={methodHref} soloNotturne={true} oraIniziale={preset.ora ?? '23:30'} />}
+{tool === 'multa' && <MultaCalc client:load lang={lang} id={id} refDay={refDay} methodHref={methodHref} tipo={(preset.tipo as Violazione) ?? 'ztl'} />}
+{tool === 'festivi' && <FestiviTool client:load lang={lang} id={id} refDay={refDay} methodHref={methodHref} citta={citta ?? 'roma'} />}

@@ -1,0 +1,22 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Contact – ${SITE_NAMES[lang]}`} description="Write to the publisher of ZTL Orari: report a changed timetable, a new zone or a suspension, ask about the method, or ask to embed the tool on your own website." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>One address, read every week: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. There is no phone line and we call no one back: this site sells nothing.</p>
+    <h2>Reporting wrong hours</h2>
+    <p>Give the city, the zone and the link to the city page or order that shows the correct hours. A photo of the sign at the gate helps, as long as it shows no plates or people. Never send us the fine notice or your plate: we do not need them. The procedure is in the <a href={route('editorial', lang)}>editorial policy</a>.</p>
+    <h2>What we cannot do</h2>
+    <p>We issue no permits, register no plates with any city and have no access to gate records or fine notices. A permit is requested from the city or its mobility company; a fine is paid or contested as written on the notice. We give no legal advice on individual cases.</p>
+    <h2>Embedding the tool</h2>
+    <p>Hotels, holiday lets, associations and local media: the “Is the ZTL active now?” tool can be embedded free with an iframe. The code is on the <a href={route('widget', lang)}>embed page</a>.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <p>{AUTHOR_NAME} is responsible for the content of ZTL Orari; full details are in the <a href={route('terms', lang)}>legal notice</a>.</p>
+  </div>
+</PageLayout>

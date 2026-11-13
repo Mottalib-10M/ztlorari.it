@@ -1,0 +1,16 @@
+# Comune di Milano : pagine ufficiali di Area C e Area B (orari, tariffe, divieti).
+comune.milano.it
+# Comune di Milano, portale open data : dataset «Aree pedonali e ZTL» (ds51, licenza CC BY) con gli orari delle ZTL di quartiere.
+dati.comune.milano.it
+# Città di Torino : scheda «ZTL Centrale» e comunicati sulla sospensione estiva e sulla ZTL Valentino.
+comune.torino.it
+# Comune di Pavia : scheda «La Z.T.L. a Pavia» e schede dei permessi residenti e giornalieri.
+comune.pavia.it
+# Comune di Bologna, portale open data : dataset «Zona a traffico limitato» e «Permessi per ZTL» (licenza CC BY 4.0).
+opendata.comune.bologna.it
+# Comune di Palermo, portale ZTL gestito per il Comune : avviso «Orari ZTL», pass e procedure.
+ztl.comune.palermo.it
+# Roma Servizi per la Mobilità, società in house di Roma Capitale che gestisce le ZTL : orari, Fascia Verde, permessi.
+romamobilita.it
+# Servizi alla Strada, società in house del Comune di Firenze che gestisce le autorizzazioni ZTL : orari dei settori.
+serviziallastrada.it

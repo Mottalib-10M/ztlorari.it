@@ -1,0 +1,224 @@
+{
+ "_lisezmoi": "Regole fisse del Codice della Strada usate dal calcolo della multa, rilette su Normattiva il 2026-11-13. Gli orari delle ZTL sono in ztl.json, città per città.",
+ "year": 2026,
+ "retrieved_at": "2026-11-13",
+ "multa": {
+  "ztl": {
+   "ref": "Art. 7 c.14",
+   "min": 83,
+   "max": 332,
+   "verify": "nelle aree pedonali e nelle zone a traffico limitato è soggetta alla sanzione amministrativa del pagamento di una somma da € 83 a € 332"
+  },
+  "tariffata": {
+   "ref": "Art. 7 c.14-bis",
+   "verify": "è maggiorata di una somma corrispondente alla tariffa dell'intero periodo tariffato per il giorno di calendario in cui avviene l'accertamento"
+  },
+  "emissioni": {
+   "ref": "Art. 7 c.13-bis",
+   "min": 168,
+   "max": 678,
+   "sospensione_giorni": [
+    15,
+    30
+   ],
+   "verify": "circola con veicoli appartenenti, relativamente alle emissioni inquinanti, a categorie inferiori a quelle prescritte, è soggetto alla sanzione amministrativa del pagamento di una somma da € 168 a € 678"
+  },
+  "un_giorno": {
+   "ref": "Art. 198 c.2-bis",
+   "verify": "si applica una sola sanzione per ciascun giorno di calendario"
+  },
+  "riduzione": 0.3,
+  "giorni_riduzione": 5,
+  "giorni_minimo": 60,
+  "notifica_giorni": 90,
+  "notifica_giorni_estero": 360,
+  "prefetto_giorni": 60,
+  "giudice_giorni": 30,
+  "giudice_giorni_estero": 60,
+  "non_pagato_frazione_max": 0.5
+ },
+ "areaC": {
+  "ticket": 7.5,
+  "ticket_tardivo": 22.5,
+  "fonte": "comune.milano.it, tabella in vigore dal 30 ottobre 2023"
+ },
+ "sources": {
+  "cds7": {
+   "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art7",
+   "label": {
+    "it": "Codice della Strada, art. 7 (zone a traffico limitato, commi 9, 13-bis, 14 e 14-bis), testo vigente su Normattiva",
+    "en": "Italian Highway Code, article 7 (limited-traffic zones, paragraphs 9, 13-bis, 14 and 14-bis), current text on Normattiva"
+   }
+  },
+  "cds198": {
+   "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art198",
+   "label": {
+    "it": "Codice della Strada, art. 198 (una sola sanzione per giorno di calendario nella stessa ZTL)",
+    "en": "Highway Code, article 198 (a single fine per calendar day in the same ZTL)"
+   }
+  },
+  "cds201": {
+   "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art201",
+   "label": {
+    "it": "Codice della Strada, art. 201 (notifica entro 90 giorni)",
+    "en": "Highway Code, article 201 (service of the fine within 90 days)"
+   }
+  },
+  "cds202": {
+   "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art202",
+   "label": {
+    "it": "Codice della Strada, art. 202 (pagamento entro 60 giorni, riduzione del 30% entro 5)",
+    "en": "Highway Code, article 202 (payment within 60 days, 30% off within 5)"
+   }
+  },
+  "cds203": {
+   "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art203",
+   "label": {
+    "it": "Codice della Strada, art. 203 (ricorso al prefetto, verbale non pagato)",
+    "en": "Highway Code, article 203 (appeal to the prefetto, unpaid fines)"
+   }
+  },
+  "dlgs150": {
+   "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2011-09-01;150~art7",
+   "label": {
+    "it": "D.Lgs. 150/2011, art. 7 (opposizione al giudice di pace: 30 giorni)",
+    "en": "Legislative decree 150/2011, article 7 (opposition before the giudice di pace: 30 days)"
+   }
+  },
+  "roma": {
+   "url": "https://romamobilita.it/muoversi-a-roma/ztl-in-centro/",
+   "label": {
+    "it": "Roma Servizi per la Mobilità, «ZTL in Centro» (aggiornata il 28/07/2026)",
+    "en": "Roma Servizi per la Mobilità, “ZTL in Centro” (updated 28 July 2026)"
+   }
+  },
+  "romaFV": {
+   "url": "https://romamobilita.it/muoversi-a-roma/ztl-fascia-verde/",
+   "label": {
+    "it": "Roma Servizi per la Mobilità, «ZTL Fascia Verde» (aggiornata il 02/11/2026)",
+    "en": "Roma Servizi per la Mobilità, “ZTL Fascia Verde” (updated 2 November 2026)"
+   }
+  },
+  "romaPermessi": {
+   "url": "https://romamobilita.it/servizi-al-pubblico/ztl/",
+   "label": {
+    "it": "Roma Servizi per la Mobilità, permessi ZTL",
+    "en": "Roma Servizi per la Mobilità, ZTL permits"
+   }
+  },
+  "milanoC": {
+   "url": "https://www.comune.milano.it/argomenti/mobilita/area-c",
+   "label": {
+    "it": "Comune di Milano, «Area C» (aggiornata il 15/10/2026)",
+    "en": "City of Milan, “Area C” (updated 15 October 2026)"
+   }
+  },
+  "milanoB": {
+   "url": "https://www.comune.milano.it/argomenti/mobilita/area-b",
+   "label": {
+    "it": "Comune di Milano, «Area B» (aggiornata il 15/10/2026)",
+    "en": "City of Milan, “Area B” (updated 15 October 2026)"
+   }
+  },
+  "milanoTicket": {
+   "url": "https://www.comune.milano.it/servizi/mobilita/area-c-acquista-il-ticket",
+   "label": {
+    "it": "Comune di Milano, «Area C: acquista il ticket»",
+    "en": "City of Milan, “Area C: buy the ticket”"
+   }
+  },
+  "milanoOD": {
+   "url": "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+   "label": {
+    "it": "Comune di Milano, open data «Aree pedonali e ZTL» (ds51, CC BY, 08/05/2026)",
+    "en": "City of Milan open data, “Aree pedonali e ZTL” (ds51, CC BY, 8 May 2026)"
+   }
+  },
+  "firenze": {
+   "url": "https://www.serviziallastrada.it/servizi-al-cittadino/autorizzazioni-circolazione-ztl-e-sosta-zcs-dei-veicoli/ztl",
+   "label": {
+    "it": "Servizi alla Strada per il Comune di Firenze, «ZTL» (aggiornata il 30/10/2023)",
+    "en": "Servizi alla Strada for the City of Florence, “ZTL” (updated 30 October 2023)"
+   }
+  },
+  "bologna": {
+   "url": "https://opendata.comune.bologna.it/explore/dataset/zona-a-traffico-limitato/",
+   "label": {
+    "it": "Comune di Bologna, open data «Zona a traffico limitato (ZTL)» (CC BY 4.0)",
+    "en": "City of Bologna open data, “Zona a traffico limitato (ZTL)” (CC BY 4.0)"
+   }
+  },
+  "torino": {
+   "url": "https://www.comune.torino.it/schede-informative/ztl-centrale",
+   "label": {
+    "it": "Città di Torino, «ZTL Centrale» (ultima modifica 12/11/2026)",
+    "en": "City of Turin, “ZTL Centrale” (last changed 12 November 2026)"
+   }
+  },
+  "torinoAgosto": {
+   "url": "https://www.comune.torino.it/novita/comunicati/sospensione-estiva-della-ztl-della-sosta-pagamento-0",
+   "label": {
+    "it": "Città di Torino, sospensione estiva della ZTL 2026 (comunicato del 04/06/2026)",
+    "en": "City of Turin, 2026 summer suspension of the ZTL (notice of 4 June 2026)"
+   }
+  },
+  "torinoValentino": {
+   "url": "https://www.comune.torino.it/novita/comunicati/ztl-valentino-citta-amplia-larea-traffico-limitato-per-valorizzare-parco",
+   "label": {
+    "it": "Città di Torino, «ZTL Valentino» (comunicato del 24/03/2026)",
+    "en": "City of Turin, “ZTL Valentino” (notice of 24 March 2026)"
+   }
+  },
+  "palermo": {
+   "url": "https://ztl.comune.palermo.it/ztl/jsp/home.do?sportello=ztl",
+   "label": {
+    "it": "Comune di Palermo, portale ZTL, avviso «Orari ZTL»",
+    "en": "City of Palermo ZTL portal, “Orari ZTL” notice"
+   }
+  },
+  "pavia": {
+   "url": "https://www.comune.pavia.it/schede-informative/ztl-pavia",
+   "label": {
+    "it": "Comune di Pavia, «La Z.T.L. a Pavia» (ultima modifica 22/09/2026)",
+    "en": "City of Pavia, “La Z.T.L. a Pavia” (last changed 22 September 2026)"
+   }
+  },
+  "romaElettrici": {
+   "url": "https://romamobilita.it/servizi-al-pubblico/accesso-in-ztl-di-veicoli-elettrici-o-a-idrogeno-novita-dal-1-luglio-2026/",
+   "label": {
+    "it": "Roma Servizi per la Mobilità, veicoli elettrici o a idrogeno in ZTL dal 1° luglio 2026 (Deliberazione GC n. 63 del 27/02/2026)",
+    "en": "Roma Servizi per la Mobilità, electric and hydrogen vehicles in the ZTL from 1 July 2026 (council resolution 63 of 27 February 2026)"
+   }
+  },
+  "pvResidente": {
+   "url": "https://www.comune.pavia.it/servizi/permesso-residente-ztl",
+   "label": {
+    "it": "Comune di Pavia, «Permesso residente in Z.T.L.»",
+    "en": "City of Pavia, “Permesso residente in Z.T.L.”"
+   }
+  },
+  "pvGiornaliero": {
+   "url": "https://www.comune.pavia.it/servizi/permesso-giornaliero-per-ztl",
+   "label": {
+    "it": "Comune di Pavia, «Permesso giornaliero per la ZTL»",
+    "en": "City of Pavia, “Permesso giornaliero per la ZTL”"
+   }
+  }
+ },
+ "permessi": {
+  "pavia": {
+   "residente": [
+    42,
+    95,
+    120
+   ],
+   "bollo": 16,
+   "giornaliero_auto": 10,
+   "giornaliero_35_75": 15,
+   "giornaliero_oltre_75": 40
+  },
+  "torino_giorni_esenzione": 10,
+  "milano_residenti_ticket": 3,
+  "milano_residenti_dal_accesso": 51
+ }
+}

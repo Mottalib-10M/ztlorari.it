@@ -1,0 +1,33 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CLARITY_ID, CONTACT_EMAIL, GA4_ID, LAST_UPDATED, LEGAL, SITE_NAMES, SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Legal notice – ${SITE_NAMES[lang]}`} description="Publisher, publication director, host, purpose of the site, Milan and Bologna open data reused under CC BY, limits of liability and governing law." lang={lang} noindex={true} breadcrumbs={[{ label: 'Legal notice' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Legal notice</h1>
+    <p>Information published under article 6 III-1 of French law no. 2004-575 of 21 June 2004 on confidence in the digital economy (LCEN).</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <p>Publication director: {AUTHOR_NAME}, responsible for the content published on {SITE_URL}.</p>
+    <h2>Host</h2>
+    <LegalIdentity mode="hosting" lang={lang} />
+    <h2>Purpose of the site, no permit</h2>
+    <p>The site states free of charge whether a limited-traffic zone is active at a given date and time, starting from the hours published by the cities, and works out the fine and deadlines the Italian Highway Code sets for unauthorised entry. These results are not a permit, an exemption, legal advice or a decision: the city order in force, the road signs and the panel at the gate, and the notice you receive are what count. The site is independent: it is not linked to any comune, municipal police, mobility company or ministry, and uses no official logos. Method and limits: <a href={route('method', lang)}>method</a>.</p>
+    <h2>Reused data</h2>
+    <p>City of Milan, “Aree pedonali e ZTL” dataset (ds51), Creative Commons Attribution licence (CC BY), and City of Bologna, “Zona a traffico limitato (ZTL)” dataset, <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener" target="_blank">CC BY 4.0</a> licence: data adapted, with transcriptions and calculations by Radif Partners. The hours of the other cities are transcribed from the official pages named on each page, with their dates. Italian Highway Code: text in force on Normattiva; official legal texts are not protected by copyright (article 5 of Italian law 633 of 22 April 1941).</p>
+    <h2>Limits of liability</h2>
+    <p>Hours are transcribed by hand and checked with automated tests, with no guarantee that they are error-free, complete or current to the day: a city may change its hours or close a zone for an event without notice. The publisher cannot be held liable for a fine incurred on the basis of a status shown here. Errors can be reported through the <a href={route('contact', lang)}>contact</a> page.</p>
+    <h2>Intellectual property</h2>
+    <p>Text, graphics and code are protected and remain the publisher’s property; short quotations are allowed with a link to the original page. Reused public data keep their own licences, stated above.</p>
+    <h2>Embedding the tool</h2><p>The “Is the ZTL active now?” tool can be embedded free as an iframe, keeping the visible link: see the <a href={route('widget', lang)}>embed page</a>.</p>
+    {/* gen-legal-pages:terms */}
+    <h2>Personal data and cookies</h2>
+    {GA4_ID ? (<p>What you choose in the tools stays in your browser. The site sets Google Analytics audience measurement cookies (<code>_ga</code>, <code>_ga_{GA4_ID.replace('G-', '')}</code>, 13 months at most), with no advertising{CLARITY_ID && '; page stability is monitored with Microsoft Clarity, cookie-free'}. Details, legal basis and how to object: <a href={route('privacy', lang)}>privacy policy</a> and <a href={route('cookies', lang)}>cookies</a> page.</p>) : (<p>What you choose in the tools stays in your browser and the site sets no cookies{CLARITY_ID && '; page stability is monitored anonymously with Microsoft Clarity, cookie-free'}. See the <a href={route('privacy', lang)}>privacy policy</a> and the <a href={route('cookies', lang)}>cookies</a> page.</p>)}
+    {/* /gen-legal-pages:terms */}
+    <h2>Reporting</h2><p>Unlawful content: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, with the page address and the reason.</p>
+    <h2>Governing law</h2><p>French law, the publisher being established in France. Failing an amicable settlement, the competent courts of {LEGAL.jurisdiction}. Updated: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,20 @@
+{
+ "accent": "#9B1B30",
+ "symbol": "ZTL",
+ "variants": [
+  {
+   "file": "og-it.png",
+   "title": "ZTL attiva adesso?\norari per città, da ordinanza",
+   "subtitle": "Stato in diretta · Fasce orarie · Festivi · Varchi · Permessi · Multa",
+   "badge": "Ordinanze comunali rilette a novembre 2026 · open data CC BY",
+   "brand": "ZTL Orari"
+  },
+  {
+   "file": "og-en.png",
+   "title": "Is the ZTL active now?\nItalian city hours, from the orders",
+   "subtitle": "Live status · Time bands · Holidays · Gates · Permits · Fine",
+   "badge": "Municipal orders re-read November 2026 · CC BY open data",
+   "brand": "ZTL Orari"
+  }
+ ]
+}
