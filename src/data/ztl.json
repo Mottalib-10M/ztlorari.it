@@ -269,10 +269,14 @@
       }
      ],
      "chiAccede": {
-      "it": "Vale solo per le categorie vietate: auto a benzina, GPL e metano fino a Euro 2, diesel fino a Euro 3, ciclomotori e moto benzina e diesel Euro 1 e precedenti. Gli altri veicoli circolano liberamente. La classe Euro della tua auto è scritta sulla carta di circolazione (il libretto).",
-      "en": "Applies only to the banned categories: petrol, LPG and CNG cars up to Euro 2, diesel cars up to Euro 3, petrol and diesel mopeds and motorbikes Euro 1 and older. Other vehicles drive freely. Your car’s Euro class is written on its registration document."
+      "it": "Vale solo per le categorie vietate: auto a benzina, GPL e metano fino a Euro 2, diesel fino a Euro 3, ciclomotori e moto benzina e diesel Euro 1 e precedenti. La classe Euro della tua auto è scritta sulla carta di circolazione (il libretto).",
+      "en": "Applies only to the banned categories: petrol, LPG and CNG cars up to Euro 2, diesel cars up to Euro 3, petrol and diesel mopeds and motorbikes Euro 1 and older. Your car’s Euro class is written on its registration document."
      },
-     "fonteExtra": 0
+     "fonteExtra": 0,
+     "entraSe": {
+      "it": "La tua auto entra se non è a benzina, GPL o metano fino a Euro 2, né diesel fino a Euro 3.",
+      "en": "Your car may enter unless it is petrol, LPG or CNG up to Euro 2, or diesel up to Euro 3."
+     }
     }
    ]
   },
@@ -362,10 +366,14 @@
       }
      ],
      "chiAccede": {
-      "it": "Divieto solo per i veicoli più inquinanti indicati dal Comune (varchi blu); gli altri entrano liberamente. Per sapere se la tua auto è vietata: la classe Euro è scritta sulla carta di circolazione (il libretto), e il Comune ha un servizio online in cui si inserisce la targa.",
-      "en": "Ban only for the most polluting vehicles listed by the city (blue gates); others enter freely. To find out whether your car is banned: the Euro class is written on the registration document, and the city has an online service where you type the plate."
+      "it": "Divieto solo per i veicoli più inquinanti indicati dal Comune (varchi blu). Per sapere se la tua auto è vietata: la classe Euro è scritta sulla carta di circolazione (il libretto), e il Comune ha un servizio online in cui si inserisce la targa.",
+      "en": "Ban only for the most polluting vehicles listed by the city (blue gates). To find out whether your car is banned: the Euro class is written on the registration document, and the city has an online service where you type the plate."
      },
-     "fonteExtra": 0
+     "fonteExtra": 0,
+     "entraSe": {
+      "it": "La tua auto entra se non è tra i veicoli più inquinanti vietati dal Comune.",
+      "en": "Your car may enter unless it is one of the most polluting vehicles banned by the city."
+     }
     },
     {
      "id": "navigli-notturna",

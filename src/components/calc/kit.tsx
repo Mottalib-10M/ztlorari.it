@@ -27,7 +27,9 @@ export function Shell({ form, result, id, after, tono }: { form: ReactNode; resu
   useEffect(() => {
     const el = card.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
-    const io = new IntersectionObserver(([e]) => setBelow(!e.isIntersecting && e.boundingClientRect.top > 0));
+    // La carta conta come vista solo quando ne entrano 120 px (testeurs naïfs du 2026-11-14, tour 2 : sull'accueil si
+    // vedeva solo l'inizio di « Non attiva », tagliato, e nessuna barra).
+    const io = new IntersectionObserver(([e]) => setBelow(!e.isIntersecting && e.boundingClientRect.top > 0), { rootMargin: '0px 0px -120px 0px' });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -40,9 +42,10 @@ export function Shell({ form, result, id, after, tono }: { form: ReactNode; resu
       {after}
       {below && key && (
         <button type="button" aria-hidden="true" tabIndex={-1} onClick={() => card.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-          className={`fixed inset-x-0 bottom-0 z-40 flex items-baseline justify-between gap-3 border-t px-4 py-3 text-left shadow-lg lg:hidden ${tono ? TONI[tono].barra : 'border-accent-200 bg-accent-50'}`}>
-          <span className="text-sm font-medium text-navy-700">{key.label}</span>
-          <span className={`tabular-nums text-xl font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{key.value}</span>
+          className={`fixed inset-x-0 bottom-0 z-40 flex items-baseline justify-between gap-3 border-t px-4 py-2 text-left shadow-lg lg:hidden ${tono ? TONI[tono].barra : 'border-accent-200 bg-accent-50'}`}>
+          {/* Una riga sola (testeurs naïfs du 2026-11-14, tour 2 : la barra su due righe copriva i campi « Ora », « Residenza »). */}
+          <span className="min-w-0 truncate text-sm font-medium text-navy-700">{key.label}</span>
+          <span className={`tabular-nums shrink-0 whitespace-nowrap text-lg font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{key.value}</span>
         </button>
       )}
     </div>
@@ -50,13 +53,15 @@ export function Shell({ form, result, id, after, tono }: { form: ReactNode; resu
 }
 export const Row2 = ({ children }: { children: ReactNode }) => <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">{children}</div>;
 
-export function Head({ label, value, sub, tono, azione }: { label: string; value: string; sub?: string; tono?: Tono; azione?: string }) {
+export function Head({ label, value, sub, tono, azione, barra }: { label: string; value: string; sub?: string; tono?: Tono; azione?: string; barra?: string }) {
   const report = useContext(KeyFigure);
-  useEffect(() => { report?.({ label, value }); }, [report, label, value]);
+  useEffect(() => { report?.({ label, value: barra ?? value }); }, [report, label, value, barra]);
+  // Verdetto in frase (« La tua auto entra se… ») : più piccolo del numero, per stare in tre righe sul telefono.
+  const frase = value.length > 24;
   return (
     <>
       <p className="text-sm font-medium text-navy-700">{label}</p>
-      <p className={`tabular-nums mt-1 text-4xl font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{value}</p>
+      <p className={`tabular-nums mt-1 ${frase ? 'text-2xl leading-snug' : 'text-4xl'} font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{value}</p>
       {azione && <p data-azione className={`mt-1 text-lg font-semibold ${tono ? TONI[tono].azione : 'text-navy-900'}`}>{azione}</p>}
       {sub && <p className="mt-1 text-sm text-navy-700">{sub}</p>}
     </>

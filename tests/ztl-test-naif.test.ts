@@ -9,7 +9,7 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { StatoCalc, MultaCalc, verdetto, leggiData, leggiOra, scriviData } from '../src/components/outils/Tools';
+import { StatoCalc, MultaCalc, verdetto, motivo, frase, leggiData, leggiOra, scriviData } from '../src/components/outils/Tools';
 import * as M from '../src/lib/engine';
 
 const stato = (refDay: string, citta = 'roma', zona = 'centro-diurna') =>
@@ -32,7 +32,7 @@ describe('verdetto a colori', () => {
   });
   it('Area B e Fascia Verde attive: ambra, il divieto vale solo per i veicoli vietati', () => {
     const roma = M.cittaById('roma')!;
-    expect(verdetto(M.zonaDi(roma, 'fascia-verde'), true, 'it')).toMatchObject({ tono: 'ambra', head: 'Divieto in vigore' });
+    expect(verdetto(M.zonaDi(roma, 'fascia-verde'), true, 'it')).toMatchObject({ tono: 'ambra' });
     expect(verdetto(M.zonaDi(roma, 'fascia-verde'), false, 'it').tono).toBe('verde');
     expect(stato('2026-11-16', 'milano', 'area-b')).toContain('data-tono="ambra"');
   });
@@ -75,5 +75,48 @@ describe('scadenze della multa in ordine di data', () => {
     expect(g).toBeLessThan(p);
     expect(h).not.toMatch(/type="date"/);
     expect(h).toContain('value="14/11/2026"');
+  });
+});
+
+/**
+ * Tour 2 (2026-11-14) : Fascia Verde e Area B dicevano « Divieto in vigore », poi « gli altri entrano », poi
+ * « Motivo: la zona è chiusa ». Un verdetto solo, sull'auto, e un motivo con le parole del divieto.
+ */
+describe('zone ambientali: un verdetto solo, motivo coerente', () => {
+  const ambientali = M.CITTA.flatMap((c) => c.zone.filter((z) => z.tipo === 'ambientale').map((z) => [c.id, z.id] as const));
+  it('ci sono zone ambientali (Fascia Verde, Area B)', () => expect(ambientali.length).toBeGreaterThanOrEqual(2));
+  for (const [c, zid] of ambientali) {
+    it(`${c}/${zid}: attiva = «La tua auto entra se…», mai «chiusa», «Divieto in vigore» o «gli altri entrano»`, () => {
+      const z = M.zonaDi(M.cittaById(c)!, zid);
+      expect(z.entraSe?.it).toMatch(/^La tua auto entra se /);
+      expect(verdetto(z, true, 'it').head).toBe(z.entraSe!.it);
+      for (const d of ['2026-11-16', '2026-11-14', '2026-11-15']) {
+        const html = renderToStaticMarkup(createElement(StatoCalc, { lang: 'it', id: 't', refDay: d, citta: c, zona: zid }));
+        expect(html).toMatch(/La tua auto entra/);
+        expect(html).not.toMatch(/Divieto in vigore|gli altri entrano|la zona è chiusa|la zona è aperta|zona chiusa/);
+      }
+    });
+  }
+  it('Fascia Verde sabato: «oggi il divieto vale tutto il giorno», fino a mezzanotte, poi lunedì', () => {
+    const z = M.zonaDi(M.cittaById('roma')!, 'fascia-verde');
+    const s = M.stato(z, '2026-11-14', '12:00');
+    expect(s.motivo).toBe('tuttoIlGiorno');
+    expect(motivo(s.motivo, z, 'it')).toBe('oggi il divieto vale tutto il giorno');
+    expect(frase(s, z, 'it', '2026-11-14')).toBe('Divieto fino a mezzanotte. Riprende lunedì 16 novembre 2026 alle 00:00.');
+  });
+  it('Area B sabato: nessuna fascia nel giorno, il motivo non parla di «quest’ora»', () => {
+    const z = M.zonaDi(M.cittaById('milano')!, 'area-b');
+    const s = M.stato(z, '2026-11-14', '20:07');
+    expect(s.motivo).toBe('liberoOggi');
+    expect(motivo(s.motivo, z, 'it')).toBe('oggi il divieto non c’è');
+    expect(motivo(M.stato(z, '2026-11-16', '21:00').motivo, z, 'it')).toBe('a quest’ora il divieto non c’è');
+    expect(motivo(M.stato(z, '2026-11-16', '10:00').motivo, z, 'it')).toBe('siamo nell’orario del divieto');
+  });
+  it('ZTL normale invariata: «siamo nell’orario in cui la zona è chiusa», e dopo la fine quando riattiva', () => {
+    const z = M.zonaDi(M.cittaById('roma')!, 'centro-diurna');
+    const s = M.stato(z, '2026-11-16', '12:00');
+    expect(motivo(s.motivo, z, 'it')).toBe('siamo nell’orario in cui la zona è chiusa');
+    expect(frase(s, z, 'it', '2026-11-16')).toBe('Attiva fino alle 18:00. Riattiva domani alle 06:30.');
+    expect(motivo(M.stato(z, '2026-11-15', '12:00').motivo, z, 'it')).toBe('oggi la zona non chiude');
   });
 });

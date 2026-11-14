@@ -114,29 +114,74 @@ function useAdesso(refDay: string, oraIniziale: string, prefix = '') {
   return [s, setS] as const;
 }
 
-function frase(st: M.Stato, l: L, oggi: string): string {
-  if (!st.cambio) return st.attiva ? T(l, 'Sempre attiva, 24 ore su 24.', 'Always active, 24 hours a day.') : T(l, 'Nessuna fascia nei prossimi 15 giorni.', 'No restricted period in the next 15 days.');
-  const giorno = st.cambio.data === oggi ? T(l, 'oggi', 'today') : st.cambio.data === M.aggiungiGiorni(oggi, 1) ? T(l, 'domani', 'tomorrow') : M.dataLunga(st.cambio.data, l);
-  const domani = st.cambio.data === M.aggiungiGiorni(oggi, 1);
-  const g = st.cambio.data === oggi ? '' : ` ${T(l, 'di', domani ? '' : 'on')} ${giorno}`.replace('  ', ' ');
-  if (st.attiva && st.cambio.ora === '00:00' && domani) return T(l, 'Attiva fino a mezzanotte.', 'Active until midnight.');
-  return st.attiva ? T(l, `Attiva fino alle ${st.cambio.ora}${g}.`, `Active until ${st.cambio.ora}${g}.`) : T(l, `Riattiva ${giorno} alle ${st.cambio.ora}.`, `Next active ${giorno} at ${st.cambio.ora}.`);
+/** Parola del divieto secondo il tipo di zona : una ZTL «è attiva», in Area B e Fascia Verde vale «il divieto». */
+const amb = (z: M.Zona) => z.tipo === 'ambientale';
+export function frase(st: M.Stato, z: M.Zona, l: L, oggi: string): string {
+  if (!st.cambio) return st.attiva ? T(l, amb(z) ? 'Divieto sempre in vigore, 24 ore su 24.' : 'Sempre attiva, 24 ore su 24.', amb(z) ? 'Ban always in force, 24 hours a day.' : 'Always active, 24 hours a day.') : T(l, 'Nessuna fascia nei prossimi 15 giorni.', 'No restricted period in the next 15 days.');
+  const quando = (d: string) => (d === oggi ? T(l, 'oggi', 'today') : d === M.aggiungiGiorni(oggi, 1) ? T(l, 'domani', 'tomorrow') : M.dataLunga(d, l));
+  if (!st.attiva) return amb(z)
+    ? T(l, `Il divieto riprende ${quando(st.cambio.data)} alle ${st.cambio.ora}.`, `The ban starts again ${quando(st.cambio.data)} at ${st.cambio.ora}.`)
+    : T(l, `Riattiva ${quando(st.cambio.data)} alle ${st.cambio.ora}.`, `Next active ${quando(st.cambio.data)} at ${st.cambio.ora}.`);
+  // Fine alle 00:00 = mezzanotte del giorno prima (« fino a mezzanotte », non « fino alle 00:00 di domenica »).
+  const mezzanotte = st.cambio.ora === '00:00';
+  const g = mezzanotte ? M.aggiungiGiorni(st.cambio.data, -1) : st.cambio.data;
+  const fino = mezzanotte ? T(l, 'fino a mezzanotte', 'until midnight') : T(l, `fino alle ${st.cambio.ora}`, `until ${st.cambio.ora}`);
+  const giorno = g === oggi ? '' : ` ${g === M.aggiungiGiorni(oggi, 1) ? T(l, 'di domani', 'tomorrow') : T(l, `di ${M.dataLunga(g, l)}`, `on ${M.dataLunga(g, l)}`)}`;
+  const fine = T(l, `${amb(z) ? 'Divieto' : 'Attiva'} ${fino}${giorno}.`, `${amb(z) ? 'Ban in force' : 'Active'} ${fino}${giorno}.`);
+  // Dopo la fine, quando riprende (testeurs naïfs du 2026-11-14, tour 2 : « fino a mezzanotte », e domenica ?).
+  const poi = M.stato(z, st.cambio.data, st.cambio.ora, l);
+  if (poi.attiva || !poi.cambio) return fine;
+  return `${fine} ${amb(z) ? T(l, `Riprende ${quando(poi.cambio.data)} alle ${poi.cambio.ora}.`, `Starts again ${quando(poi.cambio.data)} at ${poi.cambio.ora}.`) : T(l, `Riattiva ${quando(poi.cambio.data)} alle ${poi.cambio.ora}.`, `Next active ${quando(poi.cambio.data)} at ${poi.cambio.ora}.`)}`;
 }
-const MOTIVO: Record<M.Motivo, Record<L, string>> = {
-  fascia: { it: 'siamo nell’orario in cui la zona è chiusa', en: 'we are inside the zone’s restricted hours' },
+/**
+ * Motivo del verdetto, con le parole del tipo di zona (testeurs naïfs du 2026-11-14, tour 2) : « la zona è chiusa »
+ * sotto un verdetto che dice che le auto non vietate entrano, e « a quest’ora la zona è aperta » di sabato, giorno
+ * senza alcuna fascia. Ogni tipo ha il suo soggetto : la zona (ZTL), il divieto (Area B, Fascia Verde), il ticket (Area C).
+ */
+type Frase = Record<L, string>;
+type PerTipo = { altro: Frase; ambientale: Frase; pagamento: Frase };
+const MOTIVO: Record<M.Motivo, PerTipo | Frase> = {
+  fascia: {
+    altro: { it: 'siamo nell’orario in cui la zona è chiusa', en: 'we are inside the zone’s restricted hours' },
+    ambientale: { it: 'siamo nell’orario del divieto', en: 'we are inside the ban hours' },
+    pagamento: { it: 'siamo nell’orario in cui si paga il ticket', en: 'we are inside the charging hours' },
+  },
+  tuttoIlGiorno: {
+    altro: { it: 'oggi la zona è chiusa tutto il giorno', en: 'today the zone is closed all day' },
+    ambientale: { it: 'oggi il divieto vale tutto il giorno', en: 'today the ban applies all day' },
+    pagamento: { it: 'oggi il ticket si paga tutto il giorno', en: 'today the ticket is due all day' },
+  },
+  fuoriFascia: {
+    altro: { it: 'a quest’ora la zona è aperta', en: 'at this time the zone is open' },
+    ambientale: { it: 'a quest’ora il divieto non c’è', en: 'at this time there is no ban' },
+    pagamento: { it: 'a quest’ora il ticket non si paga', en: 'at this time no ticket is due' },
+  },
+  liberoOggi: {
+    altro: { it: 'oggi la zona non chiude', en: 'today the zone does not close' },
+    ambientale: { it: 'oggi il divieto non c’è', en: 'today there is no ban' },
+    pagamento: { it: 'oggi il ticket non si paga', en: 'today no ticket is due' },
+  },
   sempre: { it: 'zona chiusa 24 ore su 24', en: 'zone closed 24 hours a day' },
-  fuoriFascia: { it: 'a quest’ora la zona è aperta', en: 'at this time the zone is open' },
   festivo: { it: 'giorno festivo: la fonte dice «esclusi i festivi»', en: 'public holiday: the source says “holidays excluded”' },
   sospesa: { it: 'sospensione indicata dalla fonte', en: 'suspension stated by the source' },
   fuoriPeriodo: { it: 'fuori dal periodo stagionale', en: 'outside the seasonal period' },
   mai: { it: 'la fonte non indica orari di chiusura', en: 'the source states no restricted hours' },
 };
+export function motivo(m: M.Motivo, z: M.Zona, l: L): string {
+  const x = MOTIVO[m];
+  return 'altro' in x ? (z.tipo === 'ambientale' || z.tipo === 'pagamento' ? x[z.tipo] : x.altro)[l] : x[l];
+}
 
-/** Verdetto : parola grande, frase d'azione, colore. Nessuna promessa oltre la fonte : «puoi entrare» solo a zona spenta. */
-export function verdetto(z: M.Zona, attiva: boolean, l: L): { head: string; azione: string; tono: Tono } {
+/**
+ * Verdetto : una frase sola, colore. Nessuna promessa oltre la fonte : «puoi entrare» solo a zona spenta.
+ * Area B e Fascia Verde (testeurs naïfs du 2026-11-14, tour 2) : non più « Divieto in vigore » + « gli altri entrano »
+ * + « la zona è chiusa », ma un verdetto solo, sull'auto : « La tua auto entra se… » (`entraSe` della zona, dalla fonte).
+ * `barra` = forma breve per la barra in basso del telefono.
+ */
+export function verdetto(z: M.Zona, attiva: boolean, l: L): { head: string; azione?: string; tono: Tono; barra?: string } {
   if (z.tipo === 'ambientale') return attiva
-    ? { head: T(l, 'Divieto in vigore', 'Ban in force'), azione: T(l, 'Solo per i veicoli vietati: gli altri entrano.', 'Only for banned vehicles: others may enter.'), tono: 'ambra' }
-    : { head: T(l, 'Non attiva', 'Not active'), azione: T(l, 'Il divieto non è in vigore a quest’ora.', 'The ban is not in force at this time.'), tono: 'verde' };
+    ? { head: z.entraSe?.[l] ?? T(l, 'La tua auto entra se non è tra i veicoli vietati.', 'Your car may enter if it is not a banned vehicle.'), tono: 'ambra', barra: T(l, 'Entra se non è vietata', 'In if not banned') }
+    : { head: T(l, 'La tua auto entra.', 'Your car may enter.'), azione: T(l, 'Il divieto per i veicoli più inquinanti non è in vigore.', 'The ban on the most polluting vehicles is not in force.'), tono: 'verde', barra: T(l, 'La tua auto entra', 'Your car may enter') };
   if (z.tipo === 'pagamento') return attiva
     ? { head: T(l, 'Attiva: ticket dovuto', 'Active: ticket due'), azione: T(l, 'Si entra solo con il ticket del giorno.', 'You may enter only with the day’s ticket.'), tono: 'ambra' }
     : { head: T(l, 'Non attiva', 'Not active'), azione: T(l, 'Si entra senza ticket.', 'You may enter without a ticket.'), tono: 'verde' };
@@ -192,7 +237,7 @@ export function StatoCalc({ lang: l, id, refDay, methodHref, citta = 'roma', zon
   const head = v.head;
   const oggi = st.oggi.length
     ? st.oggi.map(([a, b]) => `${M.oraDiMinuti(a)}–${b >= 1440 ? (b === 1440 ? '24:00' : `${M.oraDiMinuti(b)} (+1)`) : M.oraDiMinuti(b)}`).join(' · ')
-    : T(l, 'nessuna fascia', 'none');
+    : T(l, 'nessuno', 'none');
   const form = (
     <>
       <Row2>
@@ -208,11 +253,11 @@ export function StatoCalc({ lang: l, id, refDay, methodHref, citta = 'roma', zon
   );
   return (
     <Shell id={id} form={form} tono={v.tono} result={<>
-      <Head label={`${z.nome[l]} · ${M.dataLunga(t.data, l)} ${T(l, 'ore', 'at')} ${t.ora}`} value={head} tono={v.tono} azione={v.azione} sub={frase(st, l, t.data)} />
+      <Head label={`${z.nome[l]} · ${M.dataLunga(t.data, l)} ${T(l, 'ore', 'at')} ${t.ora}`} value={head} barra={v.barra} tono={v.tono} azione={v.azione} sub={frase(st, z, l, t.data)} />
       {st.incerta && <Note><strong>{T(l, `Oggi è festivo (${st.festivo}) e la fonte non dice se la ZTL è sospesa: consideriamo la zona attiva, per prudenza.`, `Today is a public holiday (${st.festivo}) and the source does not say whether the ZTL is suspended: we treat it as active, to be safe.`)}</strong></Note>}
       <Rows rows={[
-        [T(l, 'Motivo', 'Why'), MOTIVO[st.motivo][l]],
-        [T(l, 'Fasce di questo giorno', 'Periods on this day'), oggi],
+        [T(l, 'Motivo', 'Why'), motivo(st.motivo, z, l)],
+        [amb(z) ? T(l, 'Orari del divieto in questo giorno', 'Ban hours on this day') : z.tipo === 'pagamento' ? T(l, 'Orari del ticket in questo giorno', 'Ticket hours on this day') : T(l, 'Orari di chiusura in questo giorno', 'Closed hours on this day'), oggi],
         ...(st.festivo && !st.incerta ? [[T(l, 'Festività', 'Public holiday'), st.festivo] as [string, string]] : []),
       ]} />
       {st.sospensione?.nota && <Note>{st.sospensione.nota[l]}</Note>}

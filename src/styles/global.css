@@ -60,6 +60,10 @@ h1, h2, h3, h4 { overflow-wrap: break-word; }
   table.empile :is(td, th):not(:first-child)::before { content: attr(data-label); flex: 0 1 55%; text-align: left; font-weight: 500; color: var(--color-navy-600); }
   table.empile :is(td, th):not(:first-child):is([data-label=""], :not([data-label]))::before { content: none; }
   .overflow-x-auto:has(> table.empile) { overflow: visible; box-shadow: none; }
+  /* Fiche de deux colonnes (testeurs naïfs du 2026-11-14, tour 2 : « Regola », « Valore », « Che cosa prevede la fonte »
+     répétés à chaque ligne, écrasés sur 4 lignes) : le titre suffit, la valeur prend toute la largeur sous lui. */
+  table.empile:not([data-titre]) tr:has(> :nth-child(2):last-child) > :nth-child(2) { display: block; text-align: left; }
+  table.empile:not([data-titre]) tr:has(> :nth-child(2):last-child) > :nth-child(2)::before { content: none; }
   /* Titre de la fiche (lib/tableaux.ts, ficheTitre) : un rang ou un nombre seul en 1re colonne cède le titre à la
      colonne suivante (data-titre="2") et reste dans la fiche avec son libellé ; un nombre qui reste titre garde le
      nom de sa colonne devant lui (« Personas: 3 »). */

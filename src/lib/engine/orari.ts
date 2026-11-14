@@ -25,6 +25,8 @@ export type TipoZona = 'oraria' | 'ambientale' | 'pedonale' | 'pagamento';
 export interface Zona {
   id: string; nome: Testo; tipo: TipoZona; fasce: Fascia[]; festivi: Festivi;
   sospensioni?: Sospensione[]; note?: Testo; chiAccede?: Testo; tariffa?: Testo;
+  /** Zona ambientale : il verdetto in una frase, « La tua auto entra se… », dalle categorie vietate della fonte. */
+  entraSe?: Testo;
   /** Indice in `fontiExtra` della città quando la zona ha una pagina ufficiale sua (Fascia Verde, Area B). */
   fonteExtra?: number;
 }
@@ -84,7 +86,8 @@ export function intervalliGiorno(z: Zona, iso: string): Array<[number, number]> 
   return out.sort((x, y) => x[0] - y[0]);
 }
 
-export type Motivo = 'fascia' | 'fuoriFascia' | 'festivo' | 'sospesa' | 'fuoriPeriodo' | 'sempre' | 'mai';
+/** `tuttoIlGiorno` : la fascia copre il giorno intero (Fascia Verde, lun–sab) ; `liberoOggi` : nessuna fascia tocca il giorno (sabato di Area B). */
+export type Motivo = 'fascia' | 'tuttoIlGiorno' | 'fuoriFascia' | 'liberoOggi' | 'festivo' | 'sospesa' | 'fuoriPeriodo' | 'sempre' | 'mai';
 export interface Stato {
   attiva: boolean;
   /** Fine della fascia in corso (se attiva) o inizio della prossima (se non attiva). */
@@ -120,10 +123,10 @@ export function stato(z: Zona, data: string, ora: string, lang: Lang = 'it'): St
   const punto = (abs: number) => ({ data: aggiungiGiorni(data, Math.floor(abs / 1440)), ora: hhmm(abs) });
   if (dentro) {
     const h24 = z.fasce.every((f) => f.da === '00:00' && (f.a === '24:00' || f.a === '00:00')) && z.fasce.some((f) => f.giorni.length === 7) && !z.fasce.some((f) => f.periodo || f.mesi);
-    return { attiva: true, cambio: h24 && !z.sospensioni?.length ? null : punto(dentro[1]), motivo: h24 ? 'sempre' : 'fascia', incerta, festivo, sospensione: sosp, oggi };
+    return { attiva: true, cambio: h24 && !z.sospensioni?.length ? null : punto(dentro[1]), motivo: h24 ? 'sempre' : dentro[0] <= 0 && dentro[1] >= 1440 ? 'tuttoIlGiorno' : 'fascia', incerta, festivo, sospensione: sosp, oggi };
   }
   const prossimo = tutti.find(([a]) => a > m);
-  const motivo: Motivo = sosp ? 'sospesa' : festivo && z.festivi === 'sospesa' ? 'festivo' : !tutti.length ? (z.fasce.some((f) => f.periodo) ? 'fuoriPeriodo' : 'mai') : 'fuoriFascia';
+  const motivo: Motivo = sosp ? 'sospesa' : festivo && z.festivi === 'sospesa' ? 'festivo' : !tutti.length ? (z.fasce.some((f) => f.periodo) ? 'fuoriPeriodo' : 'mai') : tutti.some(([a, b]) => a < 1440 && b > 0) ? 'fuoriFascia' : 'liberoOggi';
   return { attiva: false, cambio: prossimo ? punto(prossimo[0]) : null, motivo, incerta, festivo, sospensione: sosp, oggi };
 }
 
