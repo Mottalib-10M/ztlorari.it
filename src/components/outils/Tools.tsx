@@ -7,7 +7,7 @@
  * Primo rendering = giorno del build (refDay) e un'ora fissa, perché server e browser mostrino la stessa
  * cosa (RECETTE §17.5) ; l'ora vera e l'indirizzo vengono letti solo dopo. Nulla viene inviato.
  */
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import * as M from '../../lib/engine';
 import { P, type SourceKey } from '../../lib/engine/params';
 import { displayDate, formatMoney, formatNumber } from '../../lib/format';
@@ -17,7 +17,7 @@ import SelectField from '../ui/SelectField';
 import NumberField from '../ui/NumberField';
 import Toggle from '../ui/Toggle';
 import MentionExemple from '../calc/MentionExemple';
-import { Shell, Head, Rows, Note, MethodLink, Row2, T, type L } from '../calc/kit';
+import { Shell, Head, Rows, Note, MethodLink, Row2, T, type L, type Tono } from '../calc/kit';
 
 const datum = (iso: string, l: L) => displayDate(iso, LANG_TAGS[l]);
 const isIso = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
@@ -28,31 +28,74 @@ const Ext = ({ href, children }: { href: string; children: ReactNode }) => (
 const Q = ({ k, l, children }: { k: SourceKey; l: L; children?: ReactNode }) => <Ext href={P.sources[k].url}>{children ?? P.sources[k].label[l]}</Ext>;
 
 const campo = 'h-12 w-full rounded-lg border border-navy-300 bg-white px-3 text-navy-900 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500/20';
-function DateField({ id, label, value, onChange }: { id: string; label: string; value: string; onChange: (v: string) => void }) {
+/**
+ * Giorno e ora in campi di testo (testeurs naïfs du 2026-11-14) : le champ natif `date`/`time` s'affiche dans la langue
+ * du navigateur (« 11/14/2026 », « 05:25 PM » chez les trois testeurs), quel que soit le `lang` de la page. Ici
+ * gg/mm/aaaa et hh:mm sur 24 h : ce qu'on tape n'est jamais réécrit pendant la frappe (check-saisie), la forme
+ * 14/11/2026 ou 17:25 n'est posée qu'en quittant le champ. La valeur gardée reste ISO (AAAA-MM-JJ) et HH:MM.
+ */
+export function leggiData(t: string): string {
+  const s = t.trim();
+  let g: number, m: number, a: number;
+  const sep = s.match(/^(\d{1,2})\s*[/.\-\s]\s*(\d{1,2})\s*[/.\-\s]\s*(\d{4})$/);
+  const cifre = s.match(/^(\d{2})(\d{2})(\d{4})$/);
+  if (sep) { g = +sep[1]; m = +sep[2]; a = +sep[3]; } else if (cifre) { g = +cifre[1]; m = +cifre[2]; a = +cifre[3]; } else return '';
+  if (a < 2000 || a > 2099 || m < 1 || m > 12 || g < 1) return '';
+  if (g > new Date(Date.UTC(a, m, 0)).getUTCDate()) return '';
+  return `${a}-${String(m).padStart(2, '0')}-${String(g).padStart(2, '0')}`;
+}
+export const scriviData = (iso: string) => (isIso(iso) ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}` : '');
+export function leggiOra(t: string): string {
+  const x = t.trim().match(/^(\d{1,2})(?:\s*[:.,h]\s*(\d{2})|(\d{2}))?$/);
+  if (!x) return '';
+  const h = +x[1], m = +(x[2] ?? x[3] ?? 0);
+  return h <= 23 && m <= 59 ? `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}` : '';
+}
+function CampoTesto({ id, label, value, onChange, leggi, scrivi, segnaposto, aiuto, errore }: { id: string; label: string; value: string; onChange: (v: string) => void; leggi: (t: string) => string; scrivi: (v: string) => string; segnaposto: string; aiuto: string; errore: string }) {
+  const [testo, setTesto] = useState(() => scrivi(value));
+  const [uscito, setUscito] = useState(false);
+  const ultimo = useRef(value);
+  useEffect(() => {
+    // Valore posto dall'esterno (ora di Roma dopo il primo rendering, «Torna ad adesso») : lo mostriamo.
+    if (value !== ultimo.current) { ultimo.current = value; if (leggi(testo) !== value) setTesto(scrivi(value)); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+  const errata = uscito && !leggi(testo);
   return (
     <div className="grid grid-rows-subgrid row-span-3 content-start gap-y-0">
       <label htmlFor={id} className="mb-1 block text-sm font-medium text-navy-700">{label}</label>
-      <input id={id} type="date" value={value} min="2025-01-01" max="2030-12-31" onChange={(e) => { if (isIso(e.target.value)) onChange(e.target.value); }} className={campo} />
+      <input id={id} type="text" inputMode="numeric" autoComplete="off" spellCheck={false} maxLength={12} placeholder={segnaposto} value={testo}
+        onChange={(e) => { const t = e.target.value; setTesto(t); setUscito(false); const v = leggi(t); if (v) { ultimo.current = v; onChange(v); } }}
+        onBlur={() => { setUscito(true); const v = leggi(testo); if (v) setTesto(scrivi(v)); }}
+        aria-invalid={errata || undefined} aria-describedby={`${id}-help`} className={`${campo} tabular-nums ${errata ? 'border-red-600' : ''}`} />
+      <p id={`${id}-help`} className={`mt-1 text-xs ${errata ? 'font-medium text-red-700' : 'text-navy-500'}`}>{errata ? errore : aiuto}</p>
     </div>
   );
 }
-function OraField({ id, label, value, onChange }: { id: string; label: string; value: string; onChange: (v: string) => void }) {
-  return (
-    <div className="grid grid-rows-subgrid row-span-3 content-start gap-y-0">
-      <label htmlFor={id} className="mb-1 block text-sm font-medium text-navy-700">{label}</label>
-      <input id={id} type="time" value={value} step={60} onChange={(e) => { if (isOra(e.target.value)) onChange(e.target.value); }} className={campo} />
-    </div>
-  );
+function DateField({ id, label, value, onChange, l }: { id: string; label: string; value: string; onChange: (v: string) => void; l: L }) {
+  return <CampoTesto id={id} label={label} value={value} onChange={onChange} leggi={leggiData} scrivi={scriviData} segnaposto={T(l, 'gg/mm/aaaa', 'dd/mm/yyyy')}
+    aiuto={isIso(value) ? T(l, `Giorno/mese/anno: ${M.dataLunga(value, l)}`, `Day/month/year: ${M.dataLunga(value, l)}`) : T(l, 'Giorno/mese/anno, per esempio 14/11/2026', 'Day/month/year, for example 14/11/2026')}
+    errore={T(l, 'Data non valida: scrivi giorno/mese/anno, per esempio 14/11/2026', 'Invalid date: write day/month/year, for example 14/11/2026')} />;
+}
+function OraField({ id, label, value, onChange, l }: { id: string; label: string; value: string; onChange: (v: string) => void; l: L }) {
+  return <CampoTesto id={id} label={label} value={value} onChange={onChange} leggi={leggiOra} scrivi={(v) => (isOra(v) ? v : '')} segnaposto="hh:mm"
+    aiuto={T(l, 'Ore e minuti su 24 ore, per esempio 17:25', 'Hours and minutes, 24-hour clock, for example 17:25')}
+    errore={T(l, 'Ora non valida: scrivi ore:minuti su 24 ore, per esempio 17:25', 'Invalid time: write hours:minutes, 24-hour clock, for example 17:25')} />;
 }
 
 const cittaOptions = (l: L) => M.CITTA.map((c) => ({ value: c.id, label: M.nomeCitta(c, l) }));
 const zonaOptions = (c: M.Citta, l: L) => c.zone.map((z) => ({ value: z.id, label: z.nome[l] }));
 /** Fonte della città : ente, data dell'atto o della pagina, e l'avviso di verificare il varco. */
-function FonteCitta({ c, l }: { c: M.Citta; l: L }) {
-  const f = c.fonte;
+function FonteCitta({ c, z, l, oggi }: { c: M.Citta; z?: M.Zona; l: L; oggi: string }) {
+  // La zona con una pagina sua (Fascia Verde, Area B) cita quella pagina e la sua data, non quella della città
+  // (testeurs naïfs du 2026-11-14 : « pagina del 28 luglio » sopra un testo che dice « aggiornata il 2 novembre »).
+  const f = (z?.fonteExtra !== undefined && c.fontiExtra?.[z.fonteExtra]) || c.fonte;
+  // Fonte di più di un anno (Bologna 2021, Firenze 2023) : lo diciamo accanto al risultato (pagina Metodo, § 3).
+  const vecchia = f.data < M.aggiungiGiorni(oggi, -365);
   return (
     <p className="mt-3 rounded-md border border-amber-300 bg-amber-50 px-2 py-1.5 text-xs leading-snug text-amber-900">
       {T(l, 'Orari da ', 'Hours from ')}<Ext href={f.url}>{f.ente}</Ext>{T(l, `, pagina del ${datum(f.data, l)}`, `, page dated ${datum(f.data, l)}`)}
+      {vecchia && T(l, ' (è la pagina ufficiale più recente che abbiamo trovato)', ' (the most recent official page we found)')}
       {T(l, ': verifica sempre il cartello al varco, fanno fede l’ordinanza e la segnaletica.', ': always check the sign at the gate; the order and the road signs are what count.')}
     </p>
   );
@@ -76,17 +119,47 @@ function frase(st: M.Stato, l: L, oggi: string): string {
   const giorno = st.cambio.data === oggi ? T(l, 'oggi', 'today') : st.cambio.data === M.aggiungiGiorni(oggi, 1) ? T(l, 'domani', 'tomorrow') : M.dataLunga(st.cambio.data, l);
   const domani = st.cambio.data === M.aggiungiGiorni(oggi, 1);
   const g = st.cambio.data === oggi ? '' : ` ${T(l, 'di', domani ? '' : 'on')} ${giorno}`.replace('  ', ' ');
+  if (st.attiva && st.cambio.ora === '00:00' && domani) return T(l, 'Attiva fino a mezzanotte.', 'Active until midnight.');
   return st.attiva ? T(l, `Attiva fino alle ${st.cambio.ora}${g}.`, `Active until ${st.cambio.ora}${g}.`) : T(l, `Riattiva ${giorno} alle ${st.cambio.ora}.`, `Next active ${giorno} at ${st.cambio.ora}.`);
 }
 const MOTIVO: Record<M.Motivo, Record<L, string>> = {
-  fascia: { it: 'dentro una fascia oraria', en: 'inside a restricted period' },
+  fascia: { it: 'siamo nell’orario in cui la zona è chiusa', en: 'we are inside the zone’s restricted hours' },
   sempre: { it: 'zona chiusa 24 ore su 24', en: 'zone closed 24 hours a day' },
-  fuoriFascia: { it: 'fuori dalle fasce orarie', en: 'outside the restricted hours' },
+  fuoriFascia: { it: 'a quest’ora la zona è aperta', en: 'at this time the zone is open' },
   festivo: { it: 'giorno festivo: la fonte dice «esclusi i festivi»', en: 'public holiday: the source says “holidays excluded”' },
   sospesa: { it: 'sospensione indicata dalla fonte', en: 'suspension stated by the source' },
   fuoriPeriodo: { it: 'fuori dal periodo stagionale', en: 'outside the seasonal period' },
-  mai: { it: 'nessuna fascia indicata', en: 'no period stated' },
+  mai: { it: 'la fonte non indica orari di chiusura', en: 'the source states no restricted hours' },
 };
+
+/** Verdetto : parola grande, frase d'azione, colore. Nessuna promessa oltre la fonte : «puoi entrare» solo a zona spenta. */
+export function verdetto(z: M.Zona, attiva: boolean, l: L): { head: string; azione: string; tono: Tono } {
+  if (z.tipo === 'ambientale') return attiva
+    ? { head: T(l, 'Divieto in vigore', 'Ban in force'), azione: T(l, 'Solo per i veicoli vietati: gli altri entrano.', 'Only for banned vehicles: others may enter.'), tono: 'ambra' }
+    : { head: T(l, 'Non attiva', 'Not active'), azione: T(l, 'Il divieto non è in vigore a quest’ora.', 'The ban is not in force at this time.'), tono: 'verde' };
+  if (z.tipo === 'pagamento') return attiva
+    ? { head: T(l, 'Attiva: ticket dovuto', 'Active: ticket due'), azione: T(l, 'Si entra solo con il ticket del giorno.', 'You may enter only with the day’s ticket.'), tono: 'ambra' }
+    : { head: T(l, 'Non attiva', 'Not active'), azione: T(l, 'Si entra senza ticket.', 'You may enter without a ticket.'), tono: 'verde' };
+  return attiva
+    ? { head: T(l, 'ZTL attiva', 'ZTL active'), azione: T(l, 'Non entrare senza permesso.', 'Do not enter without a permit.'), tono: 'rosso' }
+    : { head: T(l, 'Non attiva', 'Not active'), azione: T(l, 'Puoi entrare.', 'You may enter.'), tono: 'verde' };
+}
+/** Mandare il risultato : il link della pagina contiene già città, zona, giorno e ora scelti. */
+function Condividi({ l }: { l: L }) {
+  const [fatto, setFatto] = useState(false);
+  const via = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) { await navigator.share({ url, title: document.title }); return; }
+      await navigator.clipboard.writeText(url); setFatto(true); setTimeout(() => setFatto(false), 2500);
+    } catch { /* condivisione annullata */ }
+  };
+  return (
+    <p className="mt-3"><button type="button" onClick={via} className="rounded-lg border border-navy-300 bg-white px-3 py-1.5 text-sm font-medium text-navy-800 hover:bg-navy-50">
+      {fatto ? T(l, 'Link copiato', 'Link copied') : T(l, 'Manda questo risultato', 'Send this result')}
+    </button></p>
+  );
+}
 
 /* ------------------------------------------------------------------ La ZTL è attiva ? */
 export function StatoCalc({ lang: l, id, refDay, methodHref, citta = 'roma', zona, mostraCitta = true }: { lang: L; id: string; refDay: string; methodHref?: string; citta?: string; zona?: string; mostraCitta?: boolean }) {
@@ -112,9 +185,11 @@ export function StatoCalc({ lang: l, id, refDay, methodHref, citta = 'roma', zon
     updateURL({ citta: c2 !== citta ? c2 : undefined, zona: z2, d: n.data || n.ora ? nt.data : undefined, h: n.data || n.ora ? nt.ora : undefined });
   };
   const adesso = () => { const now = M.adessoRoma(); setT({ ...now, live: true }); updateURL({ citta: sel.c !== citta ? sel.c : undefined, zona: sel.z }); };
-  const head = st.attiva
-    ? (z.tipo === 'ambientale' ? T(l, 'Divieto in vigore', 'Ban in force') : z.tipo === 'pagamento' ? T(l, 'Attiva: ticket dovuto', 'Active: ticket due') : T(l, 'ZTL attiva', 'ZTL active'))
-    : T(l, 'Non attiva', 'Not active');
+  // Colore e frase d'azione secondo il verdetto (testeurs naïfs du 2026-11-14 : « Non attiva » nella stessa
+  // casella rossa di « ZTL attiva »). Rosso = non entrare senza permesso ; verde = zona spenta ; ambra = divieto o
+  // ticket che riguarda solo alcuni veicoli (Area B, Fascia Verde, Area C).
+  const v = verdetto(z, st.attiva, l);
+  const head = v.head;
   const oggi = st.oggi.length
     ? st.oggi.map(([a, b]) => `${M.oraDiMinuti(a)}–${b >= 1440 ? (b === 1440 ? '24:00' : `${M.oraDiMinuti(b)} (+1)`) : M.oraDiMinuti(b)}`).join(' · ')
     : T(l, 'nessuna fascia', 'none');
@@ -125,15 +200,15 @@ export function StatoCalc({ lang: l, id, refDay, methodHref, citta = 'roma', zon
         <SelectField id={`${id}-z`} label={T(l, 'Zona', 'Zone')} value={z.id} onChange={(v) => push({ z: v })} options={zonaOptions(c, l)} />
       </Row2>
       <Row2>
-        <DateField id={`${id}-d`} label={T(l, 'Giorno', 'Day')} value={t.data} onChange={(v) => push({ data: v })} />
-        <OraField id={`${id}-h`} label={T(l, 'Ora (ora italiana)', 'Time (Italian time)')} value={t.ora} onChange={(v) => push({ ora: v })} />
+        <DateField id={`${id}-d`} label={T(l, 'Giorno', 'Day')} value={t.data} onChange={(v) => push({ data: v })} l={l} />
+        <OraField id={`${id}-h`} label={T(l, 'Ora (ora italiana)', 'Time (Italian time)')} value={t.ora} onChange={(v) => push({ ora: v })} l={l} />
       </Row2>
       {!t.live && <button type="button" onClick={adesso} className="rounded-lg border border-accent-300 bg-white px-4 py-2 text-sm font-medium text-accent-700 hover:bg-accent-50">{T(l, 'Torna ad adesso', 'Back to now')}</button>}
     </>
   );
   return (
-    <Shell id={id} form={form} result={<>
-      <Head label={`${z.nome[l]} · ${datum(t.data, l)} ${T(l, 'ore', 'at')} ${t.ora}`} value={head} sub={frase(st, l, t.data)} />
+    <Shell id={id} form={form} tono={v.tono} result={<>
+      <Head label={`${z.nome[l]} · ${M.dataLunga(t.data, l)} ${T(l, 'ore', 'at')} ${t.ora}`} value={head} tono={v.tono} azione={v.azione} sub={frase(st, l, t.data)} />
       {st.incerta && <Note><strong>{T(l, `Oggi è festivo (${st.festivo}) e la fonte non dice se la ZTL è sospesa: consideriamo la zona attiva, per prudenza.`, `Today is a public holiday (${st.festivo}) and the source does not say whether the ZTL is suspended: we treat it as active, to be safe.`)}</strong></Note>}
       <Rows rows={[
         [T(l, 'Motivo', 'Why'), MOTIVO[st.motivo][l]],
@@ -143,7 +218,8 @@ export function StatoCalc({ lang: l, id, refDay, methodHref, citta = 'roma', zon
       {st.sospensione?.nota && <Note>{st.sospensione.nota[l]}</Note>}
       {z.chiAccede && <Note>{z.chiAccede[l]}</Note>}
       {z.tariffa && <Note>{z.tariffa[l]}</Note>}
-      <FonteCitta c={c} l={l} />
+      <FonteCitta c={c} z={z} l={l} oggi={refDay} />
+      <Condividi l={l} />
       <MethodLink href={methodHref} lang={l} />
     </>} after={
       <div className="mt-5 border-t border-navy-100 pt-4 text-sm text-navy-700">
@@ -179,8 +255,8 @@ export function PanoramaTool({ lang: l, id, refDay, methodHref, soloNotturne = f
   const form = (
     <>
       <Row2>
-        <DateField id={`${id}-d`} label={T(l, 'Giorno', 'Day')} value={t.data} onChange={(v) => set({ data: v })} />
-        <OraField id={`${id}-h`} label={T(l, 'Ora (ora italiana)', 'Time (Italian time)')} value={t.ora} onChange={(v) => set({ ora: v })} />
+        <DateField id={`${id}-d`} label={T(l, 'Giorno', 'Day')} value={t.data} onChange={(v) => set({ data: v })} l={l} />
+        <OraField id={`${id}-h`} label={T(l, 'Ora (ora italiana)', 'Time (Italian time)')} value={t.ora} onChange={(v) => set({ ora: v })} l={l} />
       </Row2>
       <SelectField id={`${id}-c`} label={T(l, 'Città', 'City')} value={filtro} onChange={(v) => set({ f: v })} options={[{ value: 'tutte', label: T(l, 'Tutte le città', 'All cities') }, ...cittaOptions(l)]} />
     </>
@@ -217,7 +293,7 @@ export function MultaCalc({ lang: l, id, refDay, methodHref, tipo = 'ztl' }: { l
     const u = readParams(window.location.search);
     const tp = str(u, 'tipo', tipo) as M.Violazione;
     const n = str(u, 'notifica', '');
-    setS({ tipo: TIPI.some((x) => x.value === tp) ? tp : tipo, giorni: Math.max(1, Math.min(365, Math.round(num(u, 'giorni', 1)))), notifica: isIso(n) ? n : new Date().toISOString().slice(0, 10), estero: str(u, 'estero', '0') === '1' });
+    setS({ tipo: TIPI.some((x) => x.value === tp) ? tp : tipo, giorni: Math.max(1, Math.min(365, Math.round(num(u, 'giorni', 1)))), notifica: isIso(n) ? n : M.adessoRoma().data, estero: str(u, 'estero', '0') === '1' });
     if (u.toString()) setTouched({ url: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -227,8 +303,8 @@ export function MultaCalc({ lang: l, id, refDay, methodHref, tipo = 'ztl' }: { l
   const form = (
     <>
       <SelectField id={`${id}-t`} label={T(l, 'Che cosa dice il verbale', 'What the fine notice says')} value={s.tipo} onChange={(v) => set('tipo', { tipo: v as M.Violazione })} options={TIPI.map((x) => ({ value: x.value, label: x[l] }))} />
-      <NumberField id={`${id}-n`} label={T(l, 'Giorni diversi con passaggi', 'Different days with entries')} value={s.giorni} min={1} max={365} onChange={(v) => set('giorni', { giorni: Math.max(1, Math.round(v || 1)) })} help={T(l, 'Più passaggi nello stesso giorno nella stessa ZTL: una sola multa.', 'Several entries on the same day in the same ZTL: one fine only.')} />
-      <DateField id={`${id}-dn`} label={T(l, 'Data di notifica del verbale', 'Date the notice was served')} value={s.notifica} onChange={(v) => set('notifica', { notifica: v })} />
+      <NumberField id={`${id}-n`} label={T(l, 'In quanti giorni diversi sei passato', 'On how many different days you entered')} value={s.giorni} min={1} max={365} onChange={(v) => set('giorni', { giorni: Math.max(1, Math.round(v || 1)) })} help={T(l, 'Più passaggi nello stesso giorno nella stessa ZTL: una sola multa.', 'Several entries on the same day in the same ZTL: one fine only.')} />
+      <DateField id={`${id}-dn`} label={T(l, 'Data di notifica del verbale', 'Date the notice was served')} value={s.notifica} onChange={(v) => set('notifica', { notifica: v })} l={l} />
       <Toggle id={`${id}-e`} label={T(l, 'Residenza', 'Residence')} value={s.estero ? '1' : '0'} onChange={(v) => set('estero', { estero: v === '1' })} options={[{ value: '0', label: T(l, 'In Italia', 'In Italy') }, { value: '1', label: T(l, 'All’estero', 'Abroad') }]} />
     </>
   );
@@ -243,14 +319,15 @@ export function MultaCalc({ lang: l, id, refDay, methodHref, tipo = 'ztl' }: { l
         [T(l, 'Dopo 60 giorni senza ricorso', 'After 60 days, no appeal'), e(r.dopo60)],
         ...(r.tariffaAggiunta ? [[T(l, 'Ticket recuperato per giorno (compreso)', 'Ticket recovered per day (included)'), e(r.tariffaAggiunta)] as [string, string]] : []),
       ]} />
-      {sc && <Rows rows={[
-        [T(l, 'Sconto del 30% fino al', '30% discount until'), datum(sc.sconto, l)],
-        [T(l, 'Pagamento minimo fino al', 'Minimum payment until'), datum(sc.pagamento, l)],
-        [T(l, 'Ricorso al prefetto entro il', 'Appeal to the prefetto by'), datum(sc.prefetto, l)],
-        [T(l, 'Ricorso al giudice di pace entro il', 'Appeal to the giudice di pace by'), datum(sc.giudice, l)],
-      ]} />}
+      {sc && <Rows rows={([
+        // Scadenze in ordine di data (testeurs naïfs du 2026-11-14 : il giudice di pace, più vicino, veniva dopo il prefetto).
+        [sc.sconto, T(l, 'Sconto del 30% fino al', '30% discount until')],
+        [sc.pagamento, T(l, `Senza sconto (${e(r.entro60)}) fino al`, `Without discount (${e(r.entro60)}) until`)],
+        [sc.giudice, T(l, `Ricorso al giudice di pace (${s.estero ? P.multa.giudice_giorni_estero : P.multa.giudice_giorni} giorni) entro il`, `Appeal to the giudice di pace (${s.estero ? P.multa.giudice_giorni_estero : P.multa.giudice_giorni} days) by`)],
+        [sc.prefetto, T(l, `Ricorso al prefetto (${P.multa.prefetto_giorni} giorni) entro il`, `Appeal to the prefetto (${P.multa.prefetto_giorni} days) by`)],
+      ] as Array<[string, string]>).sort((a, b) => a[0].localeCompare(b[0])).map(([d, lab]) => [lab, datum(d, l)] as [string, string])} />}
       {s.tipo === 'emissioni' && <Note>{T(l, `Se la violazione si ripete nel biennio si aggiunge la sospensione della patente da ${P.multa.emissioni.sospensione_giorni[0]} a ${P.multa.emissioni.sospensione_giorni[1]} giorni.`, `If the offence is repeated within two years, the licence is also suspended for ${P.multa.emissioni.sospensione_giorni[0]} to ${P.multa.emissioni.sospensione_giorni[1]} days.`)}</Note>}
-      <p className="mt-2 text-xs text-navy-600"><Q k="cds7" l={l}>{T(l, 'Art. 7 CdS', 'Art. 7 Highway Code')}</Q> · <Q k="cds198" l={l}>{T(l, 'art. 198', 'art. 198')}</Q> · <Q k="cds202" l={l}>{T(l, 'art. 202', 'art. 202')}</Q> · <Q k="cds203" l={l}>{T(l, 'art. 203', 'art. 203')}</Q> · {T(l, `Normattiva, letto il ${datum(P.retrieved_at, l)}`, `Normattiva, read on ${datum(P.retrieved_at, l)}`)}</p>
+      <p className="mt-2 text-xs text-navy-600"><Q k="cds7" l={l}>{T(l, 'Codice della Strada, art. 7', 'Highway Code, art. 7')}</Q> · <Q k="cds198" l={l}>{T(l, 'art. 198', 'art. 198')}</Q> · <Q k="cds202" l={l}>{T(l, 'art. 202', 'art. 202')}</Q> · <Q k="cds203" l={l}>{T(l, 'art. 203', 'art. 203')}</Q> · {T(l, `Normattiva, letto il ${datum(P.retrieved_at, l)}`, `Normattiva, read on ${datum(P.retrieved_at, l)}`)}</p>
       <MethodLink href={methodHref} lang={l} />
     </>} />
   );
@@ -262,7 +339,7 @@ export function FestiviTool({ lang: l, id, refDay, methodHref, citta = 'roma' }:
   useEffect(() => {
     const u = readParams(window.location.search);
     const c = str(u, 'citta', citta);
-    const a = Math.round(num(u, 'anno', Number(new Date().toISOString().slice(0, 4))));
+    const a = Math.round(num(u, 'anno', Number(M.adessoRoma().data.slice(0, 4))));
     setSel({ c: M.cittaById(c) ? c : citta, anno: a >= 2025 && a <= 2030 ? a : Number(refDay.slice(0, 4)) });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -290,7 +367,7 @@ export function FestiviTool({ lang: l, id, refDay, methodHref, citta = 'roma' }:
         <ul className="mt-1 list-disc pl-5">{giorni.map((g) => <li key={g.iso}>{M.dataLunga(g.iso, l)}: {g.nome}</li>)}</ul>
       </details>
       <Note>{T(l, 'Il santo patrono del comune non è contato: il comune lo indica nell’ordinanza.', 'The city’s patron saint day is not counted: the city states it in its order.')}</Note>
-      <FonteCitta c={c} l={l} />
+      <FonteCitta c={c} l={l} oggi={refDay} />
       <MethodLink href={methodHref} lang={l} />
     </>} />
   );

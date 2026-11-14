@@ -269,9 +269,10 @@
       }
      ],
      "chiAccede": {
-      "it": "Vale solo per le categorie vietate: auto a benzina, GPL e metano fino a Euro 2, diesel fino a Euro 3, ciclomotori e moto benzina e diesel Euro 1 e precedenti. Gli altri veicoli circolano liberamente.",
-      "en": "Applies only to the banned categories: petrol, LPG and CNG cars up to Euro 2, diesel cars up to Euro 3, petrol and diesel mopeds and motorbikes Euro 1 and older. Other vehicles drive freely."
-     }
+      "it": "Vale solo per le categorie vietate: auto a benzina, GPL e metano fino a Euro 2, diesel fino a Euro 3, ciclomotori e moto benzina e diesel Euro 1 e precedenti. Gli altri veicoli circolano liberamente. La classe Euro della tua auto è scritta sulla carta di circolazione (il libretto).",
+      "en": "Applies only to the banned categories: petrol, LPG and CNG cars up to Euro 2, diesel cars up to Euro 3, petrol and diesel mopeds and motorbikes Euro 1 and older. Other vehicles drive freely. Your car’s Euro class is written on its registration document."
+     },
+     "fonteExtra": 0
     }
    ]
   },
@@ -335,8 +336,8 @@
       }
      ],
      "tariffa": {
-      "it": "Ticket giornaliero 7,50 €; 3,00 € per i residenti in Area C dal 51° accesso dell’anno; 4,50 € per i veicoli di servizio registrati e per chi sosta in un’autorimessa convenzionata; 22,50 € se pagato dal giorno dopo l’accesso ed entro il settimo giorno.",
-      "en": "Daily ticket €7.50; €3.00 for Area C residents from the 51st entry of the year; €4.50 for registered service vehicles and for drivers parked in an affiliated garage; €22.50 if paid from the day after entry up to the seventh day."
+      "it": "Ticket giornaliero 7,50 € nei giorni feriali; residenti, veicoli di servizio e chi paga in ritardo hanno tariffe diverse: vedi la tabella dei ticket di Area C.",
+      "en": "Daily ticket €7.50 on weekdays; residents, service vehicles and late payers have different rates: see the Area C ticket table."
      }
     },
     {
@@ -361,9 +362,10 @@
       }
      ],
      "chiAccede": {
-      "it": "Divieto solo per i veicoli più inquinanti indicati dal Comune (varchi blu); gli altri entrano liberamente.",
-      "en": "Ban only for the most polluting vehicles listed by the city (blue gates); others enter freely."
-     }
+      "it": "Divieto solo per i veicoli più inquinanti indicati dal Comune (varchi blu); gli altri entrano liberamente. Per sapere se la tua auto è vietata: la classe Euro è scritta sulla carta di circolazione (il libretto), e il Comune ha un servizio online in cui si inserisce la targa.",
+      "en": "Ban only for the most polluting vehicles listed by the city (blue gates); others enter freely. To find out whether your car is banned: the Euro class is written on the registration document, and the city has an online service where you type the plate."
+     },
+     "fonteExtra": 0
     },
     {
      "id": "navigli-notturna",

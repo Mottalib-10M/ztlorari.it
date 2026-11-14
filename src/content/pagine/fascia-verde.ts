@@ -27,10 +27,10 @@ export default defineGuide({
     body: (h) => `<h2>Veicoli vietati in Fascia Verde a Roma</h2>
 ${h.table([h.T('Veicolo', 'Vehicle'), h.T('Vietato', 'Banned')], [
   [h.T('Auto a benzina, GPL, metano', 'Petrol, LPG, methane cars'), h.T('Pre-Euro 1, Euro 1, Euro 2', 'Pre-Euro 1, Euro 1, Euro 2')],
-  [h.T('Auto diesel, dual fuel, mixed fuel', 'Diesel, dual-fuel, mixed-fuel cars'), h.T('Pre-Euro 1, Euro 1, 2 e 3', 'Pre-Euro 1, Euro 1, 2 and 3')],
+  [h.T('Auto diesel, anche a doppia alimentazione (dual fuel, mixed fuel)', 'Diesel cars, including dual-fuel and mixed-fuel'), h.T('Pre-Euro 1, Euro 1, 2 e 3', 'Pre-Euro 1, Euro 1, 2 and 3')],
   [h.T('Ciclomotori, microcar, moto', 'Mopeds, microcars, motorbikes'), h.T('benzina e diesel Euro 1 e precedenti', 'petrol and diesel Euro 1 and older')],
-  [h.T('Ciclomotori, microcar, moto diesel Euro 2', 'Diesel Euro 2 mopeds, microcars, motorbikes'), h.T('in deroga fino al 31 ottobre 2027', 'exempt until 31 October 2027')],
 ], h.src('romaFV', h.T('Roma Servizi per la Mobilità, «ZTL Fascia Verde», aggiornata il 2 novembre 2026', 'Roma Servizi per la Mobilità, “ZTL Fascia Verde”, updated 2 November 2026')), ['l', 'l'])}
+<p>${h.T('Ciclomotori, microcar e moto diesel Euro 2 possono ancora entrare fino al 31 ottobre 2027. «Dual fuel» e «mixed fuel» sono i diesel con una doppia alimentazione. La classe Euro del veicolo è scritta sulla carta di circolazione (il libretto).', 'Diesel Euro 2 mopeds, microcars and motorbikes may still enter until 31 October 2027. “Dual fuel” and “mixed fuel” are diesels with a second fuel. The vehicle’s Euro class is written on the registration document.')}</p>
 <h2>Fascia Verde e ZTL del centro</h2>
 <p>La Fascia Verde non sostituisce le ZTL del centro: un’auto ammessa in Fascia Verde resta esclusa dalla ${h.a('roma', 'ZTL Centro Storico')} durante la fascia diurna se non ha il permesso. Al contrario, un permesso per la ZTL non autorizza un veicolo vietato in Fascia Verde, salvo le esenzioni indicate dal Comune.</p>
 <h2>Smog e misure temporanee</h2>
@@ -53,10 +53,10 @@ ${h.table([h.T('Veicolo', 'Vehicle'), h.T('Vietato', 'Banned')], [
     body: (h) => `<h2>Vehicles banned in Rome’s Fascia Verde</h2>
 ${h.table([h.T('Veicolo', 'Vehicle'), h.T('Vietato', 'Banned')], [
   [h.T('Auto a benzina, GPL, metano', 'Petrol, LPG, methane cars'), h.T('Pre-Euro 1, Euro 1, Euro 2', 'Pre-Euro 1, Euro 1, Euro 2')],
-  [h.T('Auto diesel, dual fuel, mixed fuel', 'Diesel, dual-fuel, mixed-fuel cars'), h.T('Pre-Euro 1, Euro 1, 2 e 3', 'Pre-Euro 1, Euro 1, 2 and 3')],
+  [h.T('Auto diesel, anche a doppia alimentazione (dual fuel, mixed fuel)', 'Diesel cars, including dual-fuel and mixed-fuel'), h.T('Pre-Euro 1, Euro 1, 2 e 3', 'Pre-Euro 1, Euro 1, 2 and 3')],
   [h.T('Ciclomotori, microcar, moto', 'Mopeds, microcars, motorbikes'), h.T('benzina e diesel Euro 1 e precedenti', 'petrol and diesel Euro 1 and older')],
-  [h.T('Ciclomotori, microcar, moto diesel Euro 2', 'Diesel Euro 2 mopeds, microcars, motorbikes'), h.T('in deroga fino al 31 ottobre 2027', 'exempt until 31 October 2027')],
 ], h.src('romaFV', h.T('Roma Servizi per la Mobilità, «ZTL Fascia Verde», aggiornata il 2 novembre 2026', 'Roma Servizi per la Mobilità, “ZTL Fascia Verde”, updated 2 November 2026')), ['l', 'l'])}
+<p>${h.T('Ciclomotori, microcar e moto diesel Euro 2 possono ancora entrare fino al 31 ottobre 2027. «Dual fuel» e «mixed fuel» sono i diesel con una doppia alimentazione. La classe Euro del veicolo è scritta sulla carta di circolazione (il libretto).', 'Diesel Euro 2 mopeds, microcars and motorbikes may still enter until 31 October 2027. “Dual fuel” and “mixed fuel” are diesels with a second fuel. The vehicle’s Euro class is written on the registration document.')}</p>
 <h2>Fascia Verde and the central ZTLs</h2>
 <p>The Fascia Verde does not replace the central ZTLs: a car allowed in the Fascia Verde is still kept out of the ${h.a('roma', 'Historic Centre ZTL')} during the daytime period unless it has a permit. Conversely, a ZTL permit does not authorise a vehicle banned in the Fascia Verde, except for the exemptions the city lists.</p>
 <h2>Smog and temporary measures</h2>

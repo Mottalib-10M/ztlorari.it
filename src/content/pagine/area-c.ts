@@ -33,7 +33,7 @@ ${h.table([h.T('Voce', 'Item'), h.T('Valore', 'Value')], [
   [h.T('Ticket pagato dal giorno dopo al settimo giorno', 'Ticket paid from the next day to the seventh day'), h.eur(h.P.areaC.ticket_tardivo, 2)],
 ], h.src('milanoTicket', h.T('Comune di Milano, tabella dei ticket in vigore dal 30 ottobre 2023', 'City of Milan, ticket table in force since 30 October 2023')), ['l', 'r'])}
 <h2>Chi è escluso del tutto</h2>
-<p>Area C non è solo un pedaggio: alcune categorie di veicoli non possono entrare nemmeno pagando. La pagina del Comune elenca, tra gli altri, i motoveicoli e ciclomotori a due tempi Euro 2 e 3, quelli a gasolio Euro 2 e 3 e quelli a benzina a quattro tempi Euro 0, 1 e 2; l’elenco completo, con le deroghe, è sulla pagina di ${h.src('milanoC', 'Area C')}. Per un veicolo vietato il verbale può citare una norma diversa da quella del ticket mancato: fa fede ciò che vi è scritto.</p>
+<p>Area C non è solo un pedaggio: alcune categorie di veicoli non possono entrare nemmeno pagando. La pagina del Comune elenca, tra gli altri, i motoveicoli e ciclomotori a due tempi Euro 2 e 3, quelli a gasolio Euro 2 e 3 e quelli a benzina a quattro tempi Euro 0, 1 e 2; l’elenco completo, con le deroghe, è sulla ${h.src('milanoC', 'pagina Area C del Comune di Milano')}. Per un veicolo vietato il verbale può citare una norma diversa da quella del ticket mancato: fa fede ciò che vi è scritto.</p>
 <h2>Area C, Area B e la sera</h2>
 <p>Dopo le 19:30 Area C si spegne, ma alcune ZTL di quartiere si accendono: i Navigli dalle 20:00, l’Arco della Pace dalle 22:00. La pagina ${h.a('milano', 'ZTL Milano')} le elenca tutte; ${h.a('area-b', 'Area B')} ha lo stesso orario di Area C ma vale per un’area molto più grande e solo per i veicoli più inquinanti.</p>`,
   },
@@ -60,7 +60,7 @@ ${h.table([h.T('Voce', 'Item'), h.T('Valore', 'Value')], [
   [h.T('Ticket pagato dal giorno dopo al settimo giorno', 'Ticket paid from the next day to the seventh day'), h.eur(h.P.areaC.ticket_tardivo, 2)],
 ], h.src('milanoTicket', h.T('Comune di Milano, tabella dei ticket in vigore dal 30 ottobre 2023', 'City of Milan, ticket table in force since 30 October 2023')), ['l', 'r'])}
 <h2>Vehicles banned altogether</h2>
-<p>Area C is not just a toll: some vehicle categories may not enter even if they pay. The city page lists, among others, two-stroke Euro 2 and 3 motorbikes and mopeds, Euro 2 and 3 diesel ones and Euro 0, 1 and 2 four-stroke petrol ones; the full list, with exemptions, is on the ${h.src('milanoC', 'Area C page')}. For a banned vehicle the notice may cite a different rule from the missing-ticket one: what it says is what counts.</p>
+<p>Area C is not just a toll: some vehicle categories may not enter even if they pay. The city page lists, among others, two-stroke Euro 2 and 3 motorbikes and mopeds, Euro 2 and 3 diesel ones and Euro 0, 1 and 2 four-stroke petrol ones; the full list, with exemptions, is on the ${h.src('milanoC', 'City of Milan’s Area C page')}. For a banned vehicle the notice may cite a different rule from the missing-ticket one: what it says is what counts.</p>
 <h2>Area C, Area B and the evening</h2>
 <p>After 19:30 Area C switches off, but some neighbourhood ZTLs switch on: the Navigli from 20:00, Arco della Pace from 22:00. The ${h.a('milano', 'Milan ZTL')} page lists them all; ${h.a('area-b', 'Area B')} has the same hours as Area C but covers a much larger area and only the most polluting vehicles.</p>`,
   },

@@ -6,18 +6,18 @@ export default defineGuide({
   group: 'regole',
   order: 17,
   tool: 'stato',
-  citta: 'milano',
-  zona: 'area-b',
+  citta: 'roma',
+  zona: 'centro-diurna',
   related: ['pavia', 'torino', 'area-b', 'roma', 'multa', 'ricorso'],
   sources: ['romaPermessi', 'romaElettrici', 'milanoB', 'torino', 'pvResidente', 'pvGiornaliero'],
   it: {
     slug: 'permessi-ztl',
     nav: 'Permessi ZTL',
-    card: 'Residenti, giornalieri, auto elettriche, esenzioni a posteriori: come si entra in ZTL senza multa nelle sette città.',
+    card: 'Residenti, giornalieri, auto elettriche, esenzioni a posteriori: come si entra in ZTL senza multa, città per città.',
     title: 'Permessi ZTL 2026: residenti, giornalieri, auto elettriche',
     description: 'Permessi ZTL: a Pavia il giornaliero costa 10 €, a Roma le auto elettriche hanno bisogno del permesso dal 1° luglio 2026, a Torino esenzioni entro 10 giorni.',
     h1: 'Permessi ZTL: chi entra e come',
-    intro: 'Il permesso ZTL è l’unico modo per entrare quando la zona è attiva, salvo le deroghe. Preimpostata Area B a Milano: verifica l’orario del divieto.',
+    intro: 'Il permesso ZTL è l’unico modo per entrare quando la zona è attiva, salvo le deroghe. Prima di chiederlo, controlla qui sotto se a quell’ora la zona è attiva: si parte dalla ZTL Centro Storico di Roma.',
     resume: (h) => `Ogni Comune decide chi può entrare nelle sue ZTL e a che prezzo, quindi i permessi non si confrontano bene fra città. Alcune regole però si ripetono. I residenti dentro la zona hanno quasi sempre un permesso annuale: a Pavia costa ${h.eur(h.P.permessi.pavia.residente[0], 2)} l’anno per la prima auto del nucleo familiare, più i bolli. Chi entra ogni tanto ha un permesso giornaliero, come a Pavia per ${h.eur(h.P.permessi.pavia.giornaliero_auto, 2)}, o un’esenzione chiesta dopo il passaggio, come a Torino, dove la comunicazione a GTT va fatta entro ${h.P.permessi.torino_giorni_esenzione} giorni dal primo transito per i casi previsti. Le auto elettriche non sono più libere ovunque: a Roma, con la deliberazione 63 del 27 febbraio 2026, dal 1° luglio 2026 serve un permesso anche per loro. Nelle zone ambientali la logica è diversa: in Area B a Milano non serve un permesso per i veicoli ammessi, ma quelli vietati hanno dal 1° ottobre 2026 cinque giornate di libero accesso all’anno, e venti in più se residenti o imprese di Milano. Le persone con disabilità titolari di contrassegno entrano ovunque, ma spesso devono registrare la targa.`,
     faqs: (h) => [
       { q: 'Con il contrassegno disabili si entra in tutte le ZTL?', a: 'Sì, con il titolare a bordo, ma il varco non vede il contrassegno: legge la targa. Per questo molte città chiedono di registrare la targa o di comunicare il passaggio. Torino prevede un’esenzione a posteriori per chi non ha dichiarato la targa o viene da fuori città, Palermo una procedura per i non residenti.' },
@@ -33,6 +33,7 @@ ${h.table([h.T('Città', 'City'), h.T('Che cosa prevede la fonte', 'What the sou
   [h.a('pavia', 'Pavia'), h.T(`residenti da ${h.eur(h.P.permessi.pavia.residente[0], 2)} l’anno; giornaliero ${h.eur(h.P.permessi.pavia.giornaliero_auto, 2)}`, `residents from ${h.eur(h.P.permessi.pavia.residente[0], 2)} a year; day permit ${h.eur(h.P.permessi.pavia.giornaliero_auto, 2)}`)],
   [h.a('palermo', 'Palermo'), h.T('pass giornalieri online e con l’app PalerMobilità', 'day passes online and through the PalerMobilità app')],
 ], h.T('Fonti: pagine dei Comuni lette il 13 novembre 2026.', 'Sources: city pages read on 13 November 2026.'), ['l', 'l'])}
+<p>Per Firenze e Bologna le pagine che abbiamo letto danno gli orari ma non riassumono i permessi: chiedi al Comune, dalla pagina della città (${h.a('firenze', 'Firenze')}, ${h.a('bologna', 'Bologna')}).</p>
 <h2>Prima di chiedere un permesso</h2>
 <p>Controlla se ti serve davvero: molte ZTL hanno orari brevi, come la ZTL Centrale di ${h.a('torino', 'Torino')} dalle 7:30 alle 10:30, e basta spostare l’orario di arrivo. Le pagine delle città su questo sito dicono quando ogni zona è attiva. Se invece entri spesso, fai il conto: a Pavia il permesso residente annuale costa meno di una sola multa al minimo.</p>
 <h2>Se il permesso c’era ma la multa arriva</h2>
@@ -41,11 +42,11 @@ ${h.table([h.T('Città', 'City'), h.T('Che cosa prevede la fonte', 'What the sou
   en: {
     slug: 'ztl-permits',
     nav: 'ZTL permits',
-    card: 'Residents, day passes, electric cars, after-the-fact exemptions: how to enter a ZTL without a fine in the seven cities.',
+    card: 'Residents, day passes, electric cars, after-the-fact exemptions: how to enter a ZTL without a fine, city by city.',
     title: 'ZTL permits in Italy 2026: residents, day pass, electric car',
     description: 'ZTL permits in Italy: in Pavia a day pass costs €10, in Rome electric cars need a permit from 1 July 2026, in Turin exemptions must be claimed within 10 days.',
     h1: 'ZTL permits in Italy: who may enter and how',
-    intro: 'ZTL permits in Italy are the only way in while a zone is active, apart from the exemptions. Milan’s Area B is preset: check the hours of the ban.',
+    intro: 'ZTL permits in Italy are the only way in while a zone is active, apart from the exemptions. Before applying, check below whether the zone is active at that time: Rome’s Historic Centre ZTL is shown first.',
     resume: (h) => `Each city decides who may enter its ZTLs and at what price, so permits are hard to compare between cities. Some rules recur, though. Residents inside the zone almost always get a yearly permit: in Pavia it costs ${h.eur(h.P.permessi.pavia.residente[0], 2)} a year for the household’s first car, plus stamp duty. Occasional visitors get a day permit, as in Pavia for ${h.eur(h.P.permessi.pavia.giornaliero_auto, 2)}, or an exemption claimed after the entry, as in Turin, where GTT must be notified within ${h.P.permessi.torino_giorni_esenzione} days of the first entry for the cases listed. Electric cars are no longer free everywhere: in Rome, under resolution 63 of 27 February 2026, from 1 July 2026 they need a permit too. Environmental zones work differently: in Milan’s Area B allowed vehicles need no permit, but since 1 October 2026 banned vehicles get five free days a year, and twenty more for Milan residents and businesses. Disabled badge holders may enter everywhere, but often have to register the plate.`,
     faqs: (h) => [
       { q: 'Does a disability badge let you into every ZTL?', a: 'Yes, with the badge holder on board, but the gate does not see the badge: it reads the plate. That is why many cities ask you to register the plate or report the entry. Turin offers an after-the-fact exemption for those who had not registered their plate or come from outside the city, and Palermo a procedure for non-residents.' },
@@ -61,6 +62,7 @@ ${h.table([h.T('Città', 'City'), h.T('Che cosa prevede la fonte', 'What the sou
   [h.a('pavia', 'Pavia'), h.T(`residenti da ${h.eur(h.P.permessi.pavia.residente[0], 2)} l’anno; giornaliero ${h.eur(h.P.permessi.pavia.giornaliero_auto, 2)}`, `residents from ${h.eur(h.P.permessi.pavia.residente[0], 2)} a year; day permit ${h.eur(h.P.permessi.pavia.giornaliero_auto, 2)}`)],
   [h.a('palermo', 'Palermo'), h.T('pass giornalieri online e con l’app PalerMobilità', 'day passes online and through the PalerMobilità app')],
 ], h.T('Fonti: pagine dei Comuni lette il 13 novembre 2026.', 'Sources: city pages read on 13 November 2026.'), ['l', 'l'])}
+<p>For Florence and Bologna the pages we read give the hours but do not sum up the permits: ask the city, from the city page (${h.a('firenze', 'Florence')}, ${h.a('bologna', 'Bologna')}).</p>
 <h2>Before applying for a permit</h2>
 <p>Check whether you really need one: many ZTLs have short hours, such as ${h.a('torino', 'Turin’s')} ZTL Centrale from 7:30 to 10:30, and simply arriving later is enough. The city pages on this site show when each zone is active. If you enter often, on the other hand, do the sums: in Pavia the yearly resident permit costs less than a single minimum fine.</p>
 <h2>If you had a permit but a fine arrives</h2>

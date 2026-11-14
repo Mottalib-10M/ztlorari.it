@@ -30,7 +30,7 @@ export default defineGuide({
       return `<h2>Multa ZTL per numero di giorni</h2>
 ${h.table([h.T('Giorni con passaggi', 'Days with entries'), h.T('Entro 5 giorni', 'Within 5 days'), h.T('Entro 60 giorni', 'Within 60 days'), h.T('Non pagata, senza ricorso', 'Unpaid, no appeal')],
   [1, 2, 3, 5].map((g) => [g, h.eur(r(g).entro5, 2), h.eur(r(g).entro60, 2), h.eur(r(g).dopo60, 2)]),
-  h.T('Calcolo con l’art. 7 c.14, l’art. 198 c.2-bis e l’art. 202 del Codice della Strada. Spese di notifica escluse.', 'Calculated with art. 7(14), art. 198(2-bis) and art. 202 of the Highway Code. Notification costs excluded.'), ['r', 'r', 'r', 'r'])}
+  h.T('Calcolo con gli articoli 7, 198 e 202 del Codice della Strada (vedi le fonti). Spese di notifica escluse.', 'Calculated with articles 7, 198 and 202 of the Highway Code (see the sources). Notification costs excluded.'), ['r', 'r', 'r', 'r'])}
 <h2>Tre tipi di violazione</h2>
 <p>Il calcolo distingue tre casi. L’ingresso in una ZTL senza permesso è il caso normale. L’ingresso in una zona a pagamento senza aver pagato, come ${h.a('area-c', 'Area C')}, aggiunge alla sanzione la tariffa dell’intero periodo del giorno. La circolazione con un veicolo di classe di emissioni inferiore a quella prescritta, come nella ${h.a('fascia-verde', 'Fascia Verde')} o in ${h.a('area-b', 'Area B')}, ha una sanzione più alta, e se si ripete nel biennio porta la sospensione della patente da 15 a 30 giorni.</p>
 <h2>Che cosa il calcolo non sa</h2>
@@ -59,7 +59,7 @@ ${h.table([h.T('Giorni con passaggi', 'Days with entries'), h.T('Entro 5 giorni'
       return `<h2>ZTL fine by number of days</h2>
 ${h.table([h.T('Giorni con passaggi', 'Days with entries'), h.T('Entro 5 giorni', 'Within 5 days'), h.T('Entro 60 giorni', 'Within 60 days'), h.T('Non pagata, senza ricorso', 'Unpaid, no appeal')],
   [1, 2, 3, 5].map((g) => [g, h.eur(r(g).entro5, 2), h.eur(r(g).entro60, 2), h.eur(r(g).dopo60, 2)]),
-  h.T('Calcolo con l’art. 7 c.14, l’art. 198 c.2-bis e l’art. 202 del Codice della Strada. Spese di notifica escluse.', 'Calculated with art. 7(14), art. 198(2-bis) and art. 202 of the Highway Code. Notification costs excluded.'), ['r', 'r', 'r', 'r'])}
+  h.T('Calcolo con gli articoli 7, 198 e 202 del Codice della Strada (vedi le fonti). Spese di notifica escluse.', 'Calculated with articles 7, 198 and 202 of the Highway Code (see the sources). Notification costs excluded.'), ['r', 'r', 'r', 'r'])}
 <h2>Three kinds of offence</h2>
 <p>The calculator separates three cases. Entering a ZTL without a permit is the usual one. Entering a charging zone without paying, such as ${h.a('area-c', 'Area C')}, adds the charge for the whole day’s period to the fine. Driving a vehicle of a lower emission class than required, as in Rome’s ${h.a('fascia-verde', 'Fascia Verde')} or Milan’s ${h.a('area-b', 'Area B')}, carries a higher fine, and if repeated within two years a licence suspension of 15 to 30 days.</p>
 <h2>What the calculator does not know</h2>

@@ -22,7 +22,7 @@ export default defineGuide({
     },
     faqs: () => [
       { q: 'Perché alcune città non ci sono?', a: 'Abbiamo provato una trentina di città e ne abbiamo tenute sette: quelle che pubblicano gli orari in una pagina o in un dataset ufficiale leggibile e datato. Per altre, come Napoli, Genova, Verona o Bari, non abbiamo trovato orari leggibili e completi, quindi non possiamo dire se le loro zone sono attive.' },
-      { q: 'L’elenco si aggiorna da solo?', a: 'Lo stato sì: viene ricalcolato nel browser con la data e l’ora che scegli. Gli orari invece sono quelli delle fonti comunali alla data di lettura indicata: se un Comune cambia gli orari, l’elenco cambia solo quando rileggiamo la fonte. Per questo ogni zona porta la data della sua fonte.' },
+      { q: 'L’elenco si aggiorna da solo?', a: 'Lo stato sì: viene ricalcolato sul tuo telefono o computer con la data e l’ora che scegli. Gli orari invece sono quelli delle fonti comunali alla data di lettura indicata: se un Comune cambia gli orari, l’elenco cambia solo quando rileggiamo la fonte. Per questo ogni zona porta la data della sua fonte.' },
       { q: 'Posso vedere solo una città?', a: 'Sì: il filtro in alto riduce l’elenco a una sola città. La scelta resta nell’indirizzo della pagina, così puoi salvarla nei preferiti o mandarla a chi viaggia con te. Il filtro cambia solo l’elenco: le fasce orarie e le fonti di ogni zona restano le stesse, ciascuna con la propria data di lettura.' },
     ],
     body: (h) => `<h2>ZTL attive oggi: quante zone per città</h2>

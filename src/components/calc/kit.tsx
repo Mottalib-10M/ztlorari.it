@@ -10,7 +10,15 @@ export const eur = (x: number, l: L, d = 0) => formatMoney(x, d, l);
 /** Le chiffre clé du résultat, remonté par <Head> pour la barre collante du téléphone. */
 const KeyFigure = createContext<((k: { label: string; value: string }) => void) | null>(null);
 
-export function Shell({ form, result, id, after }: { form: ReactNode; result: ReactNode; id: string; after?: ReactNode }) {
+/** Colore della carta del risultato secondo il verdetto (rosso = vietato, verde = libero, ambra = solo alcuni veicoli). */
+const TONI = {
+  rosso: { barra: 'border-red-600 bg-red-50', carta: 'border-2 border-red-600 bg-red-50', valore: 'text-red-800', azione: 'text-red-800' },
+  verde: { barra: 'border-green-600 bg-green-50', carta: 'border-2 border-green-600 bg-green-50', valore: 'text-green-800', azione: 'text-green-900' },
+  ambra: { barra: 'border-amber-500 bg-amber-50', carta: 'border-2 border-amber-500 bg-amber-50', valore: 'text-amber-900', azione: 'text-amber-900' },
+} as const;
+export type Tono = keyof typeof TONI;
+
+export function Shell({ form, result, id, after, tono }: { form: ReactNode; result: ReactNode; id: string; after?: ReactNode; tono?: Tono }) {
   // Téléphone : tant que la carte du résultat est sous l'écran, une barre en bas montre le chiffre
   // clé (RECETTE §5, 2026-10-11). Rendue côté client seulement : aucun texte en double dans le HTML.
   const card = useRef<HTMLDivElement>(null);
@@ -27,14 +35,14 @@ export function Shell({ form, result, id, after }: { form: ReactNode; result: Re
     <div className="rechner not-prose rounded-xl border border-navy-200 bg-white p-4 sm:p-6" data-chrome data-calc={id}>
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-start lg:gap-6">
         <form onSubmit={(e) => e.preventDefault()} className="space-y-5">{form}</form>
-        <div ref={card} aria-live="polite" data-resultat className="mt-6 rounded-xl border border-accent-200 bg-accent-50/60 p-4 sm:p-5 lg:sticky lg:top-20 lg:mt-0"><KeyFigure.Provider value={setKey}>{result}</KeyFigure.Provider></div>
+        <div ref={card} aria-live="polite" data-resultat data-tono={tono} className={`mt-6 rounded-xl ${tono ? TONI[tono].carta : 'border border-accent-200 bg-accent-50/60'} p-4 sm:p-5 lg:sticky lg:top-20 lg:mt-0`}><KeyFigure.Provider value={setKey}>{result}</KeyFigure.Provider></div>
       </div>
       {after}
       {below && key && (
         <button type="button" aria-hidden="true" tabIndex={-1} onClick={() => card.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-          className="fixed inset-x-0 bottom-0 z-40 flex items-baseline justify-between gap-3 border-t border-accent-200 bg-accent-50 px-4 py-3 text-left shadow-lg lg:hidden">
+          className={`fixed inset-x-0 bottom-0 z-40 flex items-baseline justify-between gap-3 border-t px-4 py-3 text-left shadow-lg lg:hidden ${tono ? TONI[tono].barra : 'border-accent-200 bg-accent-50'}`}>
           <span className="text-sm font-medium text-navy-700">{key.label}</span>
-          <span className="tabular-nums text-xl font-bold text-navy-900">{key.value}</span>
+          <span className={`tabular-nums text-xl font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{key.value}</span>
         </button>
       )}
     </div>
@@ -42,13 +50,14 @@ export function Shell({ form, result, id, after }: { form: ReactNode; result: Re
 }
 export const Row2 = ({ children }: { children: ReactNode }) => <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">{children}</div>;
 
-export function Head({ label, value, sub }: { label: string; value: string; sub?: string }) {
+export function Head({ label, value, sub, tono, azione }: { label: string; value: string; sub?: string; tono?: Tono; azione?: string }) {
   const report = useContext(KeyFigure);
   useEffect(() => { report?.({ label, value }); }, [report, label, value]);
   return (
     <>
       <p className="text-sm font-medium text-navy-700">{label}</p>
-      <p className="tabular-nums mt-1 text-4xl font-bold text-navy-900">{value}</p>
+      <p className={`tabular-nums mt-1 text-4xl font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{value}</p>
+      {azione && <p data-azione className={`mt-1 text-lg font-semibold ${tono ? TONI[tono].azione : 'text-navy-900'}`}>{azione}</p>}
       {sub && <p className="mt-1 text-sm text-navy-700">{sub}</p>}
     </>
   );

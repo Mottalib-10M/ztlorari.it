@@ -25,6 +25,8 @@ export type TipoZona = 'oraria' | 'ambientale' | 'pedonale' | 'pagamento';
 export interface Zona {
   id: string; nome: Testo; tipo: TipoZona; fasce: Fascia[]; festivi: Festivi;
   sospensioni?: Sospensione[]; note?: Testo; chiAccede?: Testo; tariffa?: Testo;
+  /** Indice in `fontiExtra` della città quando la zona ha una pagina ufficiale sua (Fascia Verde, Area B). */
+  fonteExtra?: number;
 }
 export interface Fonte { ente: string; url: string; data: string; tipo: 'pagina' | 'opendata' | 'ordinanza' | 'comunicato'; licenza?: string; licenzaUrl?: string; dataset?: string; nota?: string }
 export interface Citta {
