@@ -91,6 +91,18 @@ res = {}
 # Trame
 s = structure(h)
 autres = accueils_portefeuille(moi)
+# Jumeaux du même lot (RECETTE §26, 2026-11-14) : les sites construits le même jour depuis le même gabarit ne sont
+# pas encore en ligne au moment du contrôle ; sans cette comparaison, chacun passe seul puis les deux tombent à
+# « à revoir » une fois publiés (4 paires du lot du 2026-11-14 à 61-68 %). On compare donc aussi l'accueil construit
+# (dist/) de chaque dossier voisin.
+_parent = os.path.dirname(os.path.abspath(site))
+for _d in sorted(os.listdir(_parent)):
+    _p = os.path.join(_parent, _d)
+    if _d == moi or os.path.abspath(_p) == os.path.abspath(site) or not os.path.isfile(os.path.join(_p, 'dist', 'index.html')):
+        continue
+    _o, _h = accueil_local(_p)
+    if _h and _d not in autres:
+        autres[_d + ' (build local)'] = _h
 proche = max(((d, jaccard(s, structure(x))) for d, x in autres.items()), key=lambda t: t[1], default=('', 0))
 pct = round(proche[1] * 100)
 res['trame'] = ('inconnu' if len(s) < 5 else 'ko' if pct >= 80 else 'a-verifier' if pct >= 60 else 'ok', f'site le plus proche : {proche[0]} ({pct} % de blocs en commun)')

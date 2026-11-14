@@ -56,5 +56,16 @@ if [ -n "$dom" ]; then
   fi
 fi
 
+# ── 3. fichiers de vérification GSC et Bing (2026-11-14 : parkeertabel.nl les
+#      avait perdus, Bing a refusé la vérification le jour de la mise en ligne)
+if [ -d "$d/public" ]; then
+  for f in google974422056b789dc0.html BingSiteAuth.xml; do
+    if [ ! -f "$d/public/$f" ]; then
+      echo "!! $nom : public/$f manque — GSC ou Bing ne pourra pas vérifier le site"
+      defauts=$((defauts + 1))
+    fi
+  done
+fi
+
 [ "$defauts" = "0" ] && echo "$nom : déploiement sain"
 exit "$defauts"
