@@ -19,35 +19,32 @@ const TONI = {
 export type Tono = keyof typeof TONI;
 
 export function Shell({ form, result, id, after, tono }: { form: ReactNode; result: ReactNode; id: string; after?: ReactNode; tono?: Tono }) {
-  // Téléphone : tant que la carte du résultat est sous l'écran, une barre en bas montre le chiffre
-  // clé (RECETTE §5, 2026-10-11). Rendue côté client seulement : aucun texte en double dans le HTML.
+  // Téléphone : quand la carte du résultat est sous le premier écran, une ligne en tête de l'outil montre le chiffre
+  // clé (RECETTE §5, « juste sous les premiers champs » ou barre en bas). Rendue côté client seulement : aucun texte en
+  // double dans le HTML. Dans le flux, plus en position fixe (testeurs naïfs du 2026-11-14, tour 3 : la barre fixe
+  // coupait le gros « Non attiva » et cachait le champ « Residenza »). Décidée une fois au chargement : elle ne
+  // s'affiche ni ne disparaît pendant le défilement, donc rien ne saute ni n'est recouvert.
   const card = useRef<HTMLDivElement>(null);
   const [below, setBelow] = useState(false);
   const [key, setKey] = useState<{ label: string; value: string } | null>(null);
   useEffect(() => {
     const el = card.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return;
-    // La carta conta come vista solo quando ne entrano 120 px (testeurs naïfs du 2026-11-14, tour 2 : sull'accueil si
-    // vedeva solo l'inizio di « Non attiva », tagliato, e nessuna barra).
-    const io = new IntersectionObserver(([e]) => setBelow(!e.isIntersecting && e.boundingClientRect.top > 0), { rootMargin: '0px 0px -120px 0px' });
-    io.observe(el);
-    return () => io.disconnect();
+    if (el) setBelow(el.getBoundingClientRect().top > window.innerHeight - 120);
   }, []);
   return (
     <div className="rechner not-prose rounded-xl border border-navy-200 bg-white p-4 sm:p-6" data-chrome data-calc={id}>
+      {below && key && (
+        <button type="button" aria-hidden="true" tabIndex={-1} onClick={() => card.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          className={`mb-4 flex w-full items-baseline justify-between gap-3 rounded-lg border px-3 py-2 text-left lg:hidden ${tono ? TONI[tono].barra : 'border-accent-200 bg-accent-50'}`}>
+          <span className="min-w-0 text-sm font-medium text-navy-700">{key.label}</span>
+          <span className={`tabular-nums shrink-0 whitespace-nowrap text-lg font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{key.value}</span>
+        </button>
+      )}
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-start lg:gap-6">
         <form onSubmit={(e) => e.preventDefault()} className="space-y-5">{form}</form>
         <div ref={card} aria-live="polite" data-resultat data-tono={tono} className={`mt-6 rounded-xl ${tono ? TONI[tono].carta : 'border border-accent-200 bg-accent-50/60'} p-4 sm:p-5 lg:sticky lg:top-20 lg:mt-0`}><KeyFigure.Provider value={setKey}>{result}</KeyFigure.Provider></div>
       </div>
       {after}
-      {below && key && (
-        <button type="button" aria-hidden="true" tabIndex={-1} onClick={() => card.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-          className={`fixed inset-x-0 bottom-0 z-40 flex items-baseline justify-between gap-3 border-t px-4 py-2 text-left shadow-lg lg:hidden ${tono ? TONI[tono].barra : 'border-accent-200 bg-accent-50'}`}>
-          {/* Una riga sola (testeurs naïfs du 2026-11-14, tour 2 : la barra su due righe copriva i campi « Ora », « Residenza »). */}
-          <span className="min-w-0 truncate text-sm font-medium text-navy-700">{key.label}</span>
-          <span className={`tabular-nums shrink-0 whitespace-nowrap text-lg font-bold ${tono ? TONI[tono].valore : 'text-navy-900'}`}>{key.value}</span>
-        </button>
-      )}
     </div>
   );
 }

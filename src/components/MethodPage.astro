@@ -2,7 +2,7 @@
 /** Metodo e fonti (pagina di fiducia, RECETTE §8.2) : fonti degli orari, trascrizione, festivi, multa, limiti, test. */
 import PageLayout from '../layouts/PageLayout.astro';
 import { route, type Locale } from '../i18n/routes';
-import { P, sourceUrl } from '../lib/engine/params';
+import { P, sourceUrl, sourceName } from '../lib/engine/params';
 import type { SourceKey } from '../lib/engine/params';
 import * as M from '../lib/engine/index';
 import { helpers } from '../lib/helpers';
@@ -18,9 +18,9 @@ const description = T(
   'How we transcribe ZTL hours from city pages, how we handle public holidays, night periods and suspensions, where the fine comes from and what we cannot do.');
 const h1 = T('Metodo e fonti degli orari', 'How the hours are read, and the sources');
 const path = route('method', lang);
-const sources = (Object.keys(P.sources) as SourceKey[]).map((k) => ({ name: P.sources[k].label[lang], url: sourceUrl(k) }));
-const righe = M.CITTA.map((c) => [M.nomeCitta(c, lang), String(c.zone.length), c.fonte.ente, date(c.fonte.data)]);
-const tabella = H.table([T('Città', 'City'), T('Orari nello strumento', 'Timetables in the tool'), T('Fonte', 'Source'), T('Data della fonte', 'Source date')], righe);
+const sources = (Object.keys(P.sources) as SourceKey[]).map((k) => ({ name: sourceName(k, lang), url: sourceUrl(k) }));
+const righe = M.CITTA.map((c) => [M.nomeCitta(c, lang), String(c.zone.length), c.fonte.ente, c.fonte.senzaData ? T('senza data', 'undated') : date(c.fonte.data), date(P.retrieved_at)]);
+const tabella = H.table([T('Città', 'City'), T('Orari nello strumento', 'Timetables in the tool'), T('Fonte', 'Source'), T('Data della fonte', 'Source date'), T('Letta da noi il', 'Read by us on')], righe);
 const nZone = M.CITTA.reduce((s, c) => s + c.zone.length, 0);
 ---
 <PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: h1, description, path, lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: h1, path }])]} breadcrumbs={[{ label: h1 }]} sources={sources}>

@@ -14,7 +14,7 @@ const nZone = DATI.citta.reduce((s, c) => s + c.zone.length, 0);
     <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
     <p>ZTL Orari è pubblicato da Radif Partners. Risponde a una domanda che ci si fa davanti a un varco o prima di partire: la ZTL è attiva adesso, e se lo è, fino a quando?</p>
     <h2>Perché questo sito</h2>
-    <p>Gli orari delle ZTL sono sparsi in decine di pagine comunali, ordinanze in PDF e mappe interattive, spesso senza data. I siti che li riprendono copiano tabelle vecchie di anni, dimenticano le sospensioni di agosto o le zone notturne, e nessuno dice da quale atto viene un orario. Qui ogni zona porta la sua fonte e la data della pagina letta: {DATI.citta.length} città e {nZone} zone, verificate una per una. Le città di cui non abbiamo trovato un orario ufficiale leggibile non ci sono.</p>
+    <p>Gli orari delle ZTL sono sparsi in decine di pagine comunali, ordinanze in PDF e mappe interattive, spesso senza data. Qui ogni zona porta la sua fonte, la data della pagina e il giorno in cui l’abbiamo letta: {DATI.citta.length} città e {nZone} zone, verificate una per una. Le città di cui non abbiamo trovato un orario ufficiale leggibile non ci sono.</p>
     <h2>Da dove vengono i numeri</h2>
     <p>Gli orari vengono dalle pagine ufficiali dei comuni e delle loro società della mobilità e dagli open data di Milano e Bologna (licenza CC BY). La multa viene dagli articoli 7, 198, 201, 202 e 203 del Codice della Strada, riletti su Normattiva il {displayDate(P.retrieved_at, 'it-IT')}. Tutto è spiegato nel <a href={route('method', lang)}>metodo</a>.</p>
     <h2>Cosa non siamo</h2>

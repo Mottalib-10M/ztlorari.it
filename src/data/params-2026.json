@@ -88,16 +88,18 @@
   "roma": {
    "url": "https://romamobilita.it/muoversi-a-roma/ztl-in-centro/",
    "label": {
-    "it": "Roma Servizi per la Mobilità, «ZTL in Centro» (aggiornata il 28/07/2026)",
-    "en": "Roma Servizi per la Mobilità, “ZTL in Centro” (updated 28 July 2026)"
-   }
+    "it": "Roma Servizi per la Mobilità, «ZTL in Centro»",
+    "en": "Roma Servizi per la Mobilità, “ZTL in Centro”"
+   },
+   "data": "2026-07-28"
   },
   "romaFV": {
    "url": "https://romamobilita.it/muoversi-a-roma/ztl-fascia-verde/",
    "label": {
-    "it": "Roma Servizi per la Mobilità, «ZTL Fascia Verde» (aggiornata il 02/11/2026)",
-    "en": "Roma Servizi per la Mobilità, “ZTL Fascia Verde” (updated 2 November 2026)"
-   }
+    "it": "Roma Servizi per la Mobilità, «ZTL Fascia Verde»",
+    "en": "Roma Servizi per la Mobilità, “ZTL Fascia Verde”"
+   },
+   "data": "2026-11-02"
   },
   "romaPermessi": {
    "url": "https://romamobilita.it/servizi-al-pubblico/ztl/",
@@ -109,65 +111,74 @@
   "milanoC": {
    "url": "https://www.comune.milano.it/argomenti/mobilita/area-c",
    "label": {
-    "it": "Comune di Milano, «Area C» (aggiornata il 15/10/2026)",
-    "en": "City of Milan, “Area C” (updated 15 October 2026)"
-   }
+    "it": "Comune di Milano, «Area C»",
+    "en": "City of Milan, “Area C”"
+   },
+   "data": "2026-10-15"
   },
   "milanoB": {
    "url": "https://www.comune.milano.it/argomenti/mobilita/area-b",
    "label": {
-    "it": "Comune di Milano, «Area B» (aggiornata il 15/10/2026)",
-    "en": "City of Milan, “Area B” (updated 15 October 2026)"
-   }
+    "it": "Comune di Milano, «Area B»",
+    "en": "City of Milan, “Area B”"
+   },
+   "data": "2026-10-15"
   },
   "milanoTicket": {
    "url": "https://www.comune.milano.it/servizi/mobilita/area-c-acquista-il-ticket",
    "label": {
     "it": "Comune di Milano, «Area C: acquista il ticket»",
     "en": "City of Milan, “Area C: buy the ticket”"
-   }
+   },
+   "data": "2026-06-16"
   },
   "milanoOD": {
    "url": "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
    "label": {
-    "it": "Comune di Milano, open data «Aree pedonali e ZTL» (ds51, CC BY, 08/05/2026)",
-    "en": "City of Milan open data, “Aree pedonali e ZTL” (ds51, CC BY, 8 May 2026)"
-   }
+    "it": "Comune di Milano, open data «Aree pedonali e ZTL» (ds51, CC BY)",
+    "en": "City of Milan open data, “Aree pedonali e ZTL” (ds51, CC BY)"
+   },
+   "data": "2026-05-08"
   },
   "firenze": {
    "url": "https://www.serviziallastrada.it/servizi-al-cittadino/autorizzazioni-circolazione-ztl-e-sosta-zcs-dei-veicoli/ztl",
    "label": {
-    "it": "Servizi alla Strada per il Comune di Firenze, «ZTL» (aggiornata il 30/10/2023)",
-    "en": "Servizi alla Strada for the City of Florence, “ZTL” (updated 30 October 2023)"
-   }
+    "it": "Servizi alla Strada per il Comune di Firenze, «ZTL»",
+    "en": "Servizi alla Strada for the City of Florence, “ZTL”"
+   },
+   "data": "2023-10-30"
   },
   "bologna": {
    "url": "https://opendata.comune.bologna.it/explore/dataset/zona-a-traffico-limitato/",
    "label": {
     "it": "Comune di Bologna, open data «Zona a traffico limitato (ZTL)» (CC BY 4.0)",
     "en": "City of Bologna open data, “Zona a traffico limitato (ZTL)” (CC BY 4.0)"
-   }
+   },
+   "data": "2021-08-26"
   },
   "torino": {
    "url": "https://www.comune.torino.it/schede-informative/ztl-centrale",
    "label": {
-    "it": "Città di Torino, «ZTL Centrale» (ultima modifica 12/11/2026)",
-    "en": "City of Turin, “ZTL Centrale” (last changed 12 November 2026)"
-   }
+    "it": "Città di Torino, «ZTL Centrale»",
+    "en": "City of Turin, “ZTL Centrale”"
+   },
+   "data": "2026-11-12"
   },
   "torinoAgosto": {
    "url": "https://www.comune.torino.it/novita/comunicati/sospensione-estiva-della-ztl-della-sosta-pagamento-0",
    "label": {
-    "it": "Città di Torino, sospensione estiva della ZTL 2026 (comunicato del 04/06/2026)",
-    "en": "City of Turin, 2026 summer suspension of the ZTL (notice of 4 June 2026)"
-   }
+    "it": "Città di Torino, sospensione estiva della ZTL 2026",
+    "en": "City of Turin, 2026 summer suspension of the ZTL"
+   },
+   "data": "2026-06-04"
   },
   "torinoValentino": {
    "url": "https://www.comune.torino.it/novita/comunicati/ztl-valentino-citta-amplia-larea-traffico-limitato-per-valorizzare-parco",
    "label": {
-    "it": "Città di Torino, «ZTL Valentino» (comunicato del 24/03/2026)",
-    "en": "City of Turin, “ZTL Valentino” (notice of 24 March 2026)"
-   }
+    "it": "Città di Torino, «ZTL Valentino»",
+    "en": "City of Turin, “ZTL Valentino”"
+   },
+   "data": "2026-03-24"
   },
   "palermo": {
    "url": "https://ztl.comune.palermo.it/ztl/jsp/home.do?sportello=ztl",
@@ -179,9 +190,10 @@
   "pavia": {
    "url": "https://www.comune.pavia.it/schede-informative/ztl-pavia",
    "label": {
-    "it": "Comune di Pavia, «La Z.T.L. a Pavia» (ultima modifica 22/09/2026)",
-    "en": "City of Pavia, “La Z.T.L. a Pavia” (last changed 22 September 2026)"
-   }
+    "it": "Comune di Pavia, «La Z.T.L. a Pavia»",
+    "en": "City of Pavia, “La Z.T.L. a Pavia”"
+   },
+   "data": "2026-09-22"
   },
   "romaElettrici": {
    "url": "https://romamobilita.it/servizi-al-pubblico/accesso-in-ztl-di-veicoli-elettrici-o-a-idrogeno-novita-dal-1-luglio-2026/",

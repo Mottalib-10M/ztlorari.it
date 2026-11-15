@@ -94,7 +94,7 @@ function FonteCitta({ c, z, l, oggi }: { c: M.Citta; z?: M.Zona; l: L; oggi: str
   const vecchia = f.data < M.aggiungiGiorni(oggi, -365);
   return (
     <p className="mt-3 rounded-md border border-amber-300 bg-amber-50 px-2 py-1.5 text-xs leading-snug text-amber-900">
-      {T(l, 'Orari da ', 'Hours from ')}<Ext href={f.url}>{f.ente}</Ext>{T(l, `, pagina del ${datum(f.data, l)}`, `, page dated ${datum(f.data, l)}`)}
+      {T(l, 'Orari da ', 'Hours from ')}<Ext href={f.url}>{f.ente}</Ext>{f.senzaData ? T(l, ', pagina senza data', ', undated page') : T(l, `, pagina del ${datum(f.data, l)}`, `, page dated ${datum(f.data, l)}`)}{T(l, `, letta il ${datum(P.retrieved_at, l)}`, `, read on ${datum(P.retrieved_at, l)}`)}
       {vecchia && T(l, ' (è la pagina ufficiale più recente che abbiamo trovato)', ' (the most recent official page we found)')}
       {T(l, ': verifica sempre il cartello al varco, fanno fede l’ordinanza e la segnaletica.', ': always check the sign at the gate; the order and the road signs are what count.')}
     </p>

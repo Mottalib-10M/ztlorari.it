@@ -31,7 +31,7 @@ ${h.table([h.T('Voce', 'Item'), h.T('Regola', 'Rule')], [
   [h.T('Sempre vietati', 'Always banned'), h.T('merci oltre 12 m, merci pericolose, veicoli senza il sensore che avvisa di pedoni e ciclisti nell’angolo cieco', 'goods vehicles over 12 m, dangerous goods, vehicles without the sensor that warns of pedestrians and cyclists in the blind spot')],
   [h.T('Giornate libere per ogni veicolo', 'Free days for every vehicle'), h.T('dal 1° ottobre 2026, 5 l’anno, a partire dal secondo anno in cui il veicolo è vietato', 'from 1 October 2026, 5 a year, starting from the second year in which the vehicle is banned')],
   [h.T('Giornate in più per residenti e imprese di Milano', 'Extra days for Milan residents and firms'), h.T('20, con targa registrata', '20, with the plate registered')],
-], h.src('milanoB', h.T('Comune di Milano, pagina Area B aggiornata il 15 ottobre 2026', 'City of Milan, Area B page updated 15 October 2026')), ['l', 'l'])}
+], h.src('milanoB', h.T(`Comune di Milano, pagina Area B aggiornata il 15 ottobre 2026, letta il ${h.date(h.P.retrieved_at)}`, `City of Milan, Area B page updated 15 October 2026, read on ${h.date(h.P.retrieved_at)}`)), ['l', 'l'])}
 <h2>Area B non è Area C</h2>
 <p>Le due aree hanno lo stesso orario e gli stessi varchi elettronici, ma regole diverse. ${h.a('area-c', 'Area C')} è piccola, chiede un ticket a tutti i veicoli ammessi e vieta alcune categorie; Area B è molto più grande, è gratuita per i veicoli ammessi e serve solo a tenere fuori quelli più inquinanti. Un’auto recente entra in Area B senza fare nulla, ma in Area C deve comunque pagare il ticket.</p>
 <h2>Altre zone ambientali</h2>
@@ -58,7 +58,7 @@ ${h.table([h.T('Voce', 'Item'), h.T('Regola', 'Rule')], [
   [h.T('Sempre vietati', 'Always banned'), h.T('merci oltre 12 m, merci pericolose, veicoli senza il sensore che avvisa di pedoni e ciclisti nell’angolo cieco', 'goods vehicles over 12 m, dangerous goods, vehicles without the sensor that warns of pedestrians and cyclists in the blind spot')],
   [h.T('Giornate libere per ogni veicolo', 'Free days for every vehicle'), h.T('dal 1° ottobre 2026, 5 l’anno, a partire dal secondo anno in cui il veicolo è vietato', 'from 1 October 2026, 5 a year, starting from the second year in which the vehicle is banned')],
   [h.T('Giornate in più per residenti e imprese di Milano', 'Extra days for Milan residents and firms'), h.T('20, con targa registrata', '20, with the plate registered')],
-], h.src('milanoB', h.T('Comune di Milano, pagina Area B aggiornata il 15 ottobre 2026', 'City of Milan, Area B page updated 15 October 2026')), ['l', 'l'])}
+], h.src('milanoB', h.T(`Comune di Milano, pagina Area B aggiornata il 15 ottobre 2026, letta il ${h.date(h.P.retrieved_at)}`, `City of Milan, Area B page updated 15 October 2026, read on ${h.date(h.P.retrieved_at)}`)), ['l', 'l'])}
 <h2>Area B is not Area C</h2>
 <p>The two areas share the same hours and the same kind of electronic gates, but their rules differ. ${h.a('area-c', 'Area C')} is small, charges every allowed vehicle a ticket and bans some categories; Area B is much larger, is free for allowed vehicles and only keeps out the most polluting ones. A recent car enters Area B without doing anything, but in Area C it still has to pay the ticket.</p>
 <h2>Other environmental zones</h2>

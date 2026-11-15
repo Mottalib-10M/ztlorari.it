@@ -14,7 +14,7 @@ const nZone = DATI.citta.reduce((s, c) => s + c.zone.length, 0);
     <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
     <p>ZTL Orari is published by Radif Partners. It answers the question drivers ask in front of a camera gate or before setting off: is the ZTL active now, and if so, until when?</p>
     <h2>Why this site</h2>
-    <p>ZTL hours are scattered across dozens of city pages, PDF orders and interactive maps, often undated. Sites that repeat them copy tables that are years old, forget August suspensions or night zones, and none says which order a timetable comes from. Here every zone carries its source and the date of the page read: {DATI.citta.length} cities and {nZone} zones, checked one by one. Cities for which we found no readable official timetable are not included.</p>
+    <p>ZTL hours are scattered across dozens of city pages, PDF orders and interactive maps, often undated. Here every zone carries its source, the date of the page and the day we read it: {DATI.citta.length} cities and {nZone} zones, checked one by one. Cities for which we found no readable official timetable are not included.</p>
     <h2>Where the figures come from</h2>
     <p>Hours come from the official pages of the cities and their mobility companies and from Milan and Bologna open data (CC BY licence). The fine comes from articles 7, 198, 201, 202 and 203 of the Italian Highway Code, read again on Normattiva on {displayDate(P.retrieved_at, 'en-GB')}. Everything is explained in the <a href={route('method', lang)}>method</a>.</p>
     <h2>What we are not</h2>

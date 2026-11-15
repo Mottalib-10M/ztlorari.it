@@ -30,7 +30,7 @@ export interface Zona {
   /** Indice in `fontiExtra` della città quando la zona ha una pagina ufficiale sua (Fascia Verde, Area B). */
   fonteExtra?: number;
 }
-export interface Fonte { ente: string; url: string; data: string; tipo: 'pagina' | 'opendata' | 'ordinanza' | 'comunicato'; licenza?: string; licenzaUrl?: string; dataset?: string; nota?: string }
+export interface Fonte { ente: string; url: string; data: string; /** La pagina non riporta una data : `data` è quella di lettura. */ senzaData?: boolean; tipo: 'pagina' | 'opendata' | 'ordinanza' | 'comunicato'; licenza?: string; licenzaUrl?: string; dataset?: string; nota?: string }
 export interface Citta {
   id: string; nome: string; nomeEn?: string; regione: string; fonte: Fonte; fontiExtra?: Fonte[];
   permessi?: { url: string; ente: string }; varchi?: number | null; varchiNota?: Testo; zone: Zona[]; patrono?: { md: string; nome: string };

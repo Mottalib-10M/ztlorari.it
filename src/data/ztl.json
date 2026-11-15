@@ -946,6 +946,7 @@
     "ente": "Comune di Palermo, portale ZTL",
     "url": "https://ztl.comune.palermo.it/ztl/jsp/home.do?sportello=ztl",
     "data": "2026-11-13",
+    "senzaData": true,
     "tipo": "pagina",
     "nota": "avviso «ORARI ZTL» del portale; la pagina non riporta una data, è stata letta il 13/11/2026"
    },

@@ -1,0 +1,21 @@
+# Synthèse du 3e tour des testeurs naïfs, ztlorari.it (2026-11-14), corrections du 4e et dernier tour
+
+Notes du 3e tour : testeur 1 8/8/7, testeur 2 8/8/8, testeur 3 7/7/8. Version testée : 15814db.
+Dernier tour : aucun testeur ne repasse. Corrections validées par l’éditeur, et seulement celles-ci : la barre du verdict
+ne recouvre plus rien ; les sources ne sont plus opposées aux concurrents et portent leur date de publication et de lecture.
+
+| # | Difficulté relevée (testeurs) | Décision | Raison / ce qui a été fait |
+|---|---|---|---|
+| 1 | La barre collante du verdict coupe le gros « Non attiva » de la carte et cache le champ « Residenza » de la multa (1, 2, 3) | **corrigé** (validé éditeur) | Cause : barre en position fixe en bas de l’écran, qui se pose forcément sur ce qui s’y trouve (haut de la carte à l’accueil, menu « Residenza » sur la multa). Elle devient une ligne dans le flux, en tête de l’outil (RECETTE : « juste sous les premiers champs » est permis) : elle ne se superpose plus à rien, au téléphone comme sur ordinateur (masquée sur grand écran, où le résultat est à côté des champs). Elle n’apparaît que si la carte du résultat est sous le premier écran au chargement, et ne bascule plus pendant le défilement (aucun saut de mise en page). Le libellé n’est plus tronqué (« saba… »). Captures relues. Défaut de trame (`calc/kit.tsx`). |
+| 2 | « Chi siamo » reproche aux autres sites de « copiare tabelle vecchie di anni » alors que les sources de Bologna (2021) et Firenze (2023) sont anciennes (2 ; 1, 3 sur les dates) | **corrigé** (validé éditeur) | Phrase retirée (it et en) ; remplacée par « ogni zona porta la sua fonte, la data della pagina e il giorno in cui l’abbiamo letta ». |
+| 3 | Dates des sources : 2021 / 2023 sans dire quand le site les a relues ; Bologna sans date dans les « Fonti » de l’accueil (1, 2, 3) | **corrigé** (validé éditeur) | Chaque source affiche sa date de publication et sa date de lecture : listes « Fonti » de toutes les pages (« pubblicata il 26 agosto 2021, letta il 13 novembre 2026 »), encadré du résultat (« pagina del …, letta il … »), tableau de Metodo (colonne « Letta da noi il »), tableaux des pages de ville, légendes des tableaux Area B, Area C, Fascia Verde. Dates reprises de `ztl.json` (vérifiées une à une contre ce fichier) et de `params-2026.json` (date de lecture). Aucune date inventée : sans date à la source, « senza data di pubblicazione » (Normattiva, pages de permis) ; Palermo, page non datée, n’affiche plus sa date de lecture comme date de la page (« pagina senza data »). Pas de « ancora valida » : le site n’a pas de relecture qui le prouve. |
+| 4 | Fascia Verde : verdict de 5 lignes, « Entra se non è vietata » creux, double négation (1, 2, 3) | **non retenu** | Hors des corrections validées par l’éditeur pour ce dernier tour. |
+| 5 | Formule du verdict différente d’une page à l’autre ; « La tua auto entra » parle de ma voiture (1, 2, 3) | **non retenu** | Hors des corrections validées. |
+| 6 | « Riprende/Riattiva lunedì » sans dire que dimanche est libre (1, 3) | **non retenu** | Hors des corrections validées. |
+| 7 | « Orari di chiusura in questo giorno » à côté de « la zona è aperta » (1, 3) | **non retenu** | Hors des corrections validées. |
+| 8 | Multa : échéancier qui mélange paiement et recours ; lien « Metodo e fonti degli orari » sous l’amende (1, 2) | **non retenu** | Hors des corrections validées. |
+| 9 | Jargon (varco, deroga, comma 13-bis, ARPA, PM10, CC BY, ds51) et références de loi dans les paragraphes (1, 3) | **non retenu** | Hors des corrections validées. |
+| 10 | Longs paragraphes sous l’outil (1) ; villes couvertes pas listées sous le titre (2) ; « ZTL attive oggi » pas au premier niveau (2) ; Permessi qui s’ouvre sur l’outil (2) | **non retenu** | Hors des corrections validées ; un seul testeur chacun. |
+| 11 | « tabella dei ticket in vigore dal 30 ottobre 2023 » sème le doute (1, 2, 3) | **corrigé en partie** | Date d’entrée en vigueur du tarif, gardée ; la légende donne désormais la date de la page (16 juin 2026) et la date de lecture (13 novembre 2026). |
+
+Défaut de trame signalé : la barre collante fixe en bas de l’écran (`calc/kit.tsx`) recouvre forcément ce qui est sous elle ; ici remplacée par une ligne dans le flux en tête de l’outil.

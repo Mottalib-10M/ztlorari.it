@@ -31,7 +31,7 @@ ${h.table([h.T('Voce', 'Item'), h.T('Valore', 'Value')], [
   [h.T('Residenti in Area C: ogni ingresso dopo i primi 50 dell’anno', 'Area C residents: each entry after the first 50 of the year'), h.eur(3, 2)],
   [h.T('Veicoli di servizio registrati, autorimesse convenzionate', 'Registered service vehicles, affiliated garages'), h.eur(4.5, 2)],
   [h.T('Ticket pagato in ritardo, dal giorno dopo ed entro 7 giorni', 'Ticket paid late, from the next day and within 7 days'), h.eur(h.P.areaC.ticket_tardivo, 2)],
-], h.src('milanoTicket', h.T('Comune di Milano, tabella dei ticket in vigore dal 30 ottobre 2023', 'City of Milan, ticket table in force since 30 October 2023')), ['l', 'r'])}
+], h.src('milanoTicket', h.T(`Comune di Milano, tabella dei ticket in vigore dal 30 ottobre 2023 (pagina del ${h.date(h.P.sources.milanoTicket.data)}, letta il ${h.date(h.P.retrieved_at)})`, `City of Milan, ticket table in force since 30 October 2023 (page dated ${h.date(h.P.sources.milanoTicket.data)}, read on ${h.date(h.P.retrieved_at)})`)), ['l', 'r'])}
 <h2>Chi è escluso del tutto</h2>
 <p>Area C non è solo un pedaggio: alcune categorie di veicoli non possono entrare nemmeno pagando. La pagina del Comune elenca, tra gli altri, i motoveicoli e ciclomotori a due tempi Euro 2 e 3, quelli a gasolio Euro 2 e 3 e quelli a benzina a quattro tempi Euro 0, 1 e 2; l’elenco completo, con le deroghe, è sulla ${h.src('milanoC', 'pagina Area C del Comune di Milano')}. Per un veicolo vietato il verbale può citare una norma diversa da quella del ticket mancato: fa fede ciò che vi è scritto.</p>
 <h2>Area C, Area B e la sera</h2>
@@ -58,7 +58,7 @@ ${h.table([h.T('Voce', 'Item'), h.T('Valore', 'Value')], [
   [h.T('Residenti in Area C: ogni ingresso dopo i primi 50 dell’anno', 'Area C residents: each entry after the first 50 of the year'), h.eur(3, 2)],
   [h.T('Veicoli di servizio registrati, autorimesse convenzionate', 'Registered service vehicles, affiliated garages'), h.eur(4.5, 2)],
   [h.T('Ticket pagato in ritardo, dal giorno dopo ed entro 7 giorni', 'Ticket paid late, from the next day and within 7 days'), h.eur(h.P.areaC.ticket_tardivo, 2)],
-], h.src('milanoTicket', h.T('Comune di Milano, tabella dei ticket in vigore dal 30 ottobre 2023', 'City of Milan, ticket table in force since 30 October 2023')), ['l', 'r'])}
+], h.src('milanoTicket', h.T(`Comune di Milano, tabella dei ticket in vigore dal 30 ottobre 2023 (pagina del ${h.date(h.P.sources.milanoTicket.data)}, letta il ${h.date(h.P.retrieved_at)})`, `City of Milan, ticket table in force since 30 October 2023 (page dated ${h.date(h.P.sources.milanoTicket.data)}, read on ${h.date(h.P.retrieved_at)})`)), ['l', 'r'])}
 <h2>Vehicles banned altogether</h2>
 <p>Area C is not just a toll: some vehicle categories may not enter even if they pay. The city page lists, among others, two-stroke Euro 2 and 3 motorbikes and mopeds, Euro 2 and 3 diesel ones and Euro 0, 1 and 2 four-stroke petrol ones; the full list, with exemptions, is on the ${h.src('milanoC', 'City of Milan’s Area C page')}. For a banned vehicle the notice may cite a different rule from the missing-ticket one: what it says is what counts.</p>
 <h2>Area C, Area B and the evening</h2>

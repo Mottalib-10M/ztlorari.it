@@ -26,7 +26,7 @@ export default defineGuide({
       { q: 'Posso vedere solo una città?', a: 'Sì: il filtro in alto riduce l’elenco a una sola città. La scelta resta nell’indirizzo della pagina, così puoi salvarla nei preferiti o mandarla a chi viaggia con te. Il filtro cambia solo l’elenco: le fasce orarie e le fonti di ogni zona restano le stesse, ciascuna con la propria data di lettura.' },
     ],
     body: (h) => `<h2>ZTL attive oggi: quante zone per città</h2>
-${h.table([h.T('Città', 'City'), h.T('Zone', 'Zones'), h.T('Fonte del', 'Source dated')], h.M.CITTA.map((c) => [h.a(c.id, h.M.nomeCitta(c, h.lang)), c.zone.length, h.date(c.fonte.data)]), h.T('Fonti comunali lette il 13 novembre 2026.', 'City sources read on 13 November 2026.'), ['l', 'r', 'r'])}
+${h.table([h.T('Città', 'City'), h.T('Zone', 'Zones'), h.T('Fonte del', 'Source dated')], h.M.CITTA.map((c) => [h.a(c.id, h.M.nomeCitta(c, h.lang)), c.zone.length, (c.fonte.senzaData ? h.T('senza data', 'undated') : h.date(c.fonte.data))]), h.T('Fonti comunali lette il 13 novembre 2026.', 'City sources read on 13 November 2026.'), ['l', 'r', 'r'])}
 <h2>Come leggere lo stato</h2>
 <p>«Attiva» vuol dire che, alla data e all’ora scelte, la zona è dentro una fascia di divieto: senza permesso non si entra. «Non attiva» vuol dire che si è fuori fascia, in un festivo in cui la zona si ferma o in una sospensione annunciata. Quando la fonte non dice nulla sui festivi, la zona è considerata attiva e il risultato lo segnala.</p>
 <h2>Per un’ora precisa</h2>
@@ -50,7 +50,7 @@ ${h.table([h.T('Città', 'City'), h.T('Zone', 'Zones'), h.T('Fonte del', 'Source
       { q: 'Can I see a single city?', a: 'Yes: the filter at the top narrows the list to one city. The choice stays in the page address, so you can bookmark it or send it to whoever is travelling with you. The filter only changes the list: the time periods and sources of each zone stay the same, each with its own reading date.' },
     ],
     body: (h) => `<h2>ZTLs active today in Italy: zones per city</h2>
-${h.table([h.T('Città', 'City'), h.T('Zone', 'Zones'), h.T('Fonte del', 'Source dated')], h.M.CITTA.map((c) => [h.a(c.id, h.M.nomeCitta(c, h.lang)), c.zone.length, h.date(c.fonte.data)]), h.T('Fonti comunali lette il 13 novembre 2026.', 'City sources read on 13 November 2026.'), ['l', 'r', 'r'])}
+${h.table([h.T('Città', 'City'), h.T('Zone', 'Zones'), h.T('Fonte del', 'Source dated')], h.M.CITTA.map((c) => [h.a(c.id, h.M.nomeCitta(c, h.lang)), c.zone.length, (c.fonte.senzaData ? h.T('senza data', 'undated') : h.date(c.fonte.data))]), h.T('Fonti comunali lette il 13 novembre 2026.', 'City sources read on 13 November 2026.'), ['l', 'r', 'r'])}
 <h2>How to read the status</h2>
 <p>“Active” means that, at the chosen date and time, the zone is inside a ban period: without a permit you may not enter. “Not active” means you are outside the period, on a holiday when the zone stops, or in an announced suspension. When the source says nothing about holidays, the zone is treated as active and the result flags it.</p>
 <h2>For a precise time</h2>
