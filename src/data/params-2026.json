@@ -43,6 +43,13 @@
   "fonte": "comune.milano.it, tabella in vigore dal 30 ottobre 2023"
  },
  "sources": {
+  "cds195": {
+   "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art195",
+   "label": {
+    "it": "Codice della Strada, art. 195, comma 3 (aggiornamento biennale delle sanzioni, decreto entro il 1° dicembre, in vigore dal 1° gennaio), testo vigente su Normattiva",
+    "en": "Italian Highway Code, article 195, paragraph 3 (two-yearly update of fines, decree by 1 December, in force from 1 January), current text on Normattiva"
+   }
+  },
   "cds7": {
    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art7",
    "label": {

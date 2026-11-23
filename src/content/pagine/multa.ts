@@ -7,7 +7,7 @@ export default defineGuide({
   order: 11,
   tool: 'multa',
   related: ['ricorso', 'varchi', 'area-c', 'permessi', 'roma', 'milano'],
-  sources: ['cds7', 'cds198', 'cds201', 'cds202', 'cds203'],
+  sources: ['cds7', 'cds195', 'cds198', 'cds201', 'cds202', 'cds203'],
   it: {
     slug: 'multa-ztl',
     nav: 'Multa ZTL',
@@ -33,6 +33,8 @@ ${h.table([h.T('Giorni con passaggi', 'Days with entries'), h.T('Entro 5 giorni'
   h.T('Calcolo con gli articoli 7, 198 e 202 del Codice della Strada (vedi le fonti). Spese di notifica escluse.', 'Calculated with articles 7, 198 and 202 of the Highway Code (see the sources). Notification costs excluded.'), ['r', 'r', 'r', 'r'])}
 <h2>Tre tipi di violazione</h2>
 <p>Il calcolo distingue tre casi. L’ingresso in una ZTL senza permesso è il caso normale. L’ingresso in una zona a pagamento senza aver pagato, come ${h.a('area-c', 'Area C')}, aggiunge alla sanzione la tariffa dell’intero periodo del giorno. La circolazione con un veicolo di classe di emissioni inferiore a quella prescritta, come nella ${h.a('fascia-verde', 'Fascia Verde')} o in ${h.a('area-b', 'Area B')}, ha una sanzione più alta, e se si ripete nel biennio porta la sospensione della patente da 15 a 30 giorni.</p>
+<h2>Multa ZTL 2027: quando cambiano gli importi</h2>
+<p>Gli importi usati dal calcolo sono quelli in vigore oggi. Quelli del 2027 li fissa un decreto del Ministro della giustizia, di concerto con i Ministri dell’economia e delle infrastrutture, che l’${h.src('cds195', 'articolo 195, comma 3')} chiede di adottare entro il 1° dicembre 2026, con l’aumento pari all’inflazione ISTAT del biennio 2025-2026 e l’applicazione dal 1° gennaio 2027. Il calcolo passerà ai nuovi minimi e massimi, e allo sconto del 30% ricalcolato, appena il decreto sarà pubblicato in Gazzetta Ufficiale.</p>
 <h2>Che cosa il calcolo non sa</h2>
 <p>Non conosce le spese di notifica e di procedimento, diverse per ogni ente, né le maggiorazioni per i ritardi oltre i termini di legge. Non dice se il verbale è valido: per questo c’è la pagina sul ${h.a('ricorso', 'ricorso contro la multa ZTL')}. E non sa se avevi un permesso: in quel caso il problema è la banca dati dei varchi, da segnalare all’ente.</p>`;
     },
@@ -62,6 +64,8 @@ ${h.table([h.T('Giorni con passaggi', 'Days with entries'), h.T('Entro 5 giorni'
   h.T('Calcolo con gli articoli 7, 198 e 202 del Codice della Strada (vedi le fonti). Spese di notifica escluse.', 'Calculated with articles 7, 198 and 202 of the Highway Code (see the sources). Notification costs excluded.'), ['r', 'r', 'r', 'r'])}
 <h2>Three kinds of offence</h2>
 <p>The calculator separates three cases. Entering a ZTL without a permit is the usual one. Entering a charging zone without paying, such as ${h.a('area-c', 'Area C')}, adds the charge for the whole day’s period to the fine. Driving a vehicle of a lower emission class than required, as in Rome’s ${h.a('fascia-verde', 'Fascia Verde')} or Milan’s ${h.a('area-b', 'Area B')}, carries a higher fine, and if repeated within two years a licence suspension of 15 to 30 days.</p>
+<h2>ZTL fine 2027: when the amounts change</h2>
+<p>The calculator uses the amounts in force today. The 2027 ones are set by a decree of the Minister of Justice, with the Economy and Transport Ministers, which ${h.src('cds195', 'article 195, paragraph 3')} requires by 1 December 2026, raising fines by ISTAT inflation over 2025-2026 and applying them from 1 January 2027. The calculator will switch to the new minimums and maximums, with the 30% discount worked out again, as soon as the decree is published in the Gazzetta Ufficiale.</p>
 <h2>What the calculator does not know</h2>
 <p>It does not know the notification and processing costs, which differ by authority, nor surcharges for paying after the legal deadlines. It does not say whether the notice is valid: that is what the ${h.a('ricorso', 'ZTL fine appeal')} page is for. And it does not know whether you had a permit: if you did, the problem lies in the gate database and should be reported to the authority.</p>`;
     },

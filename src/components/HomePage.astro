@@ -22,7 +22,7 @@ const H = helpers(lang);
 const path = route('home', lang);
 const resume = x.resume(H);
 const faqs = x.faqs(H);
-const keys: SourceKey[] = ['cds7', 'cds198', 'cds202', 'cds203', 'roma', 'romaFV', 'milanoC', 'milanoB', 'milanoOD', 'firenze', 'bologna', 'torino', 'palermo', 'pavia'];
+const keys: SourceKey[] = ['cds7', 'cds195', 'cds198', 'cds202', 'cds203', 'roma', 'romaFV', 'milanoC', 'milanoB', 'milanoOD', 'firenze', 'bologna', 'torino', 'palermo', 'pavia'];
 const sources = keys.map((k) => ({ name: sourceName(k, lang), url: sourceUrl(k) }));
 const jsonLd = [websiteSchema(lang), organizationSchema(lang), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(faqs, lang)];
 const by = H.T('Di', 'By');
